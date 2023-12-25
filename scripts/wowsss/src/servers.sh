@@ -92,7 +92,7 @@ function servers_setup_default_config_files ()
          # sed -i 's/MySQLExecutable\s\{0,\}=.*/MySQLExecutable = "\/usr\/bin\/mysql"/' $filename1
          sed -i 's/LoginDatabaseInfo\s\{0,\}=.*/LoginDatabaseInfo = "'$var_db_auth_host';'$var_db_auth_port';'$var_db_servers_user';'$var_db_servers_pass';'$var_db_auth_name'"/' $filename1
 
-         print_warning_message "<b>$var_dir_conf/$filename1</b>: $cons_msg_automatic_file_check"
+         print_warning_message "<b>$var_dir_config/$filename1</b>: $cons_msg_automatic_file_check"
       else
          print_error_message "<b>$filename2</b> $cons_lit_not_found_"
       fi
@@ -118,13 +118,13 @@ function servers_setup_default_config_files ()
          if [ $var_current_mode = $MODE_CATACLYSM ]; then
             sed -i 's/HotfixDatabaseInfo\s\{0,\}=.*/HotfixDatabaseInfo    = "'$var_db_hotfixes_host';'$var_db_hotfixes_port';'$var_db_servers_user';'$var_db_servers_pass';'$var_db_hotfixes_name'"/' $filename1
          fi
-         print_warning_message "<b>$var_dir_conf/$filename1</b>: $cons_msg_automatic_file_check"
+         print_warning_message "<b>$var_dir_config/$filename1</b>: $cons_msg_automatic_file_check"
       else
          print_error_message "<b>$filename2</b> $cons_lit_not_found_"
       fi
    fi
 
-   if [[ $var_current_mode = $MODE_WOLK ]]; then
+   if [[ $var_current_mode == $MODE_WOTLK ]]; then
       # No automatic changes in transmog.conf, just copy it.
       filename1="modules/transmog.conf"
       filename2="$filename1.dist"
@@ -132,7 +132,7 @@ function servers_setup_default_config_files ()
          if [ -f "$filename2" ]; then
             print_info_message "$cons_lit_configuring <b>$filename1</b>..."
             cp "$filename2" "$filename1"
-            print_warning_message "<b>$var_dir_conf/$filename1</b>: $cons_msg_automatic_file_check"
+            print_warning_message "<b>$var_dir_config/$filename1</b>: $cons_msg_automatic_file_check"
          else
             print_error_message "<b>$filename2</b> $cons_lit_not_found_"
          fi
