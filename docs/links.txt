@@ -1,0 +1,28 @@
+WoWSSS
+   https://github.com/IvanLlanas/wowsss
+   https://github.com/IvanLlanas/wotlk-server-data-files
+   https://github.com/IvanLlanas/cataclysm-server-data-files
+   
+AzerothCore-WotLK (servers sources)
+   https://github.com/azerothcore/azerothcore-wotlk
+   
+WotLK server data files
+   https://github.com/wowgaming/client-data/releases/
+
+TrinityCore-Cataclysm (servers sources)
+   https://github.com/The-Cataclysm-Preservation-Project/TrinityCore
+
+TrinityCore-Cataclysm (required SQL files)
+   https://github.com/The-Cataclysm-Preservation-Project/TrinityCore/releases
+
+TrinityCore-MoP (servers sources)
+   https://github.com/Legends-of-Azeroth
+
+Mangos GM commands
+   https://github.com/dkpminus/mangos-gm-commands
+
+AzerothCore GM commands
+   https://www.azerothcore.org/wiki/gm-commands
+   
+TrinityCore GM commands
+   https://trinitycore.info/how-to/gm-commands

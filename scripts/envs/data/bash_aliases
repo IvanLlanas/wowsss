@@ -1,0 +1,27 @@
+# Common aliases
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias x="exit"
+alias c="clear"
+alias d="ls -l --group-directories-first"
+alias da="ls -la --group-directories-first"
+alias l="less"
+alias q=nano
+alias qq="sudo nano"
+alias ea="q ~/.bash_aliases"
+alias fm="xdg-open ."
+alias bk="rm *.bak"
+alias sysupdate="sudo apt update && sudo apt upgrade -y"
+alias clearhistory="cat /dev/null > ~/.bash_history && history -c"
+alias fr="echo && free -h && echo &&  df / -h && echo"
+alias bat="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
+alias 7za="7z a -t7z -mx=9"
+# Debian
+# alias shutdown="sudo systemctl poweroff"
+# alias reboot="sudo systemctl reboot"
+
+# WoW servers
+alias wow="~/wowsss/scripts/wowsss/wowsss.sh"
+
+export LC_ALL="C"

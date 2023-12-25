@@ -1,0 +1,87 @@
+[/]
+default='9956a6c5-0a18-47f7-8777-ff097f8254c3'
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '9956a6c5-0a18-47f7-8777-ff097f8254c3', '7bb44f24-9657-4f0a-8f68-06995133b4eb', 'c88a9988-91de-4767-b381-89adef5b6180']
+
+[:7bb44f24-9657-4f0a-8f68-06995133b4eb]
+background-color='rgb(24,16,16)'
+background-transparency-percent=16
+bold-color='rgb(255,240,240)'
+bold-color-same-as-fg=false
+bold-is-bright=true
+cursor-background-color='rgb(255,0,0)'
+cursor-colors-set=true
+default-size-columns=120
+default-size-rows=32
+font='Monospace 15'
+foreground-color='rgb(208,192,192)'
+highlight-colors-set=true
+highlight-foreground-color='rgb(255,128,128)'
+palette=['rgb(46,52,54)', 'rgb(204,0,0)', 'rgb(78,154,6)', 'rgb(196,160,0)', 'rgb(52,101,164)', 'rgb(117,80,123)', 'rgb(6,152,154)', 'rgb(211,215,207)', 'rgb(85,87,83)', 'rgb(239,41,41)', 'rgb(138,226,52)', 'rgb(252,233,79)', 'rgb(114,159,207)', 'rgb(173,127,168)', 'rgb(52,226,226)', 'rgb(238,238,236)']
+use-system-font=false
+use-theme-colors=false
+use-theme-transparency=false
+use-transparent-background=true
+visible-name='Cataclysm'
+
+[:9956a6c5-0a18-47f7-8777-ff097f8254c3]
+background-color='rgb(33,29,26)'
+background-transparency-percent=16
+bold-color='rgb(240,240,255)'
+bold-color-same-as-fg=false
+bold-is-bright=true
+cursor-background-color='rgb(192,128,0)'
+cursor-colors-set=true
+default-size-columns=120
+default-size-rows=32
+font='Monospace 15'
+foreground-color='rgb(192,192,192)'
+highlight-colors-set=true
+highlight-foreground-color='rgb(255,192,0)'
+palette=['rgb(46,52,54)', 'rgb(204,0,0)', 'rgb(78,154,6)', 'rgb(196,160,0)', 'rgb(52,101,164)', 'rgb(117,80,123)', 'rgb(6,152,154)', 'rgb(211,215,207)', 'rgb(85,87,83)', 'rgb(239,41,41)', 'rgb(138,226,52)', 'rgb(252,233,79)', 'rgb(114,159,207)', 'rgb(173,127,168)', 'rgb(52,226,226)', 'rgb(238,238,236)']
+use-system-font=false
+use-theme-colors=false
+use-theme-transparency=false
+use-transparent-background=true
+visible-name='Vanilla'
+
+[:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+background-color='rgb(0,16,32)'
+background-transparency-percent=16
+bold-color='rgb(255,255,240)'
+bold-color-same-as-fg=false
+bold-is-bright=true
+cursor-background-color='rgb(0,128,192)'
+cursor-colors-set=true
+default-size-columns=120
+default-size-rows=32
+font='Monospace 15'
+foreground-color='rgb(240,240,255)'
+highlight-colors-set=true
+highlight-foreground-color='rgb(255,255,0)'
+palette=['rgb(46,52,54)', 'rgb(204,0,0)', 'rgb(78,154,6)', 'rgb(196,160,0)', 'rgb(52,101,164)', 'rgb(117,80,123)', 'rgb(6,152,154)', 'rgb(211,215,207)', 'rgb(85,87,83)', 'rgb(239,41,41)', 'rgb(138,226,52)', 'rgb(252,233,79)', 'rgb(114,159,207)', 'rgb(173,127,168)', 'rgb(52,226,226)', 'rgb(238,238,236)']
+use-system-font=false
+use-theme-colors=false
+use-theme-transparency=false
+use-transparent-background=true
+visible-name='Ivan'
+
+[:c88a9988-91de-4767-b381-89adef5b6180]
+background-color='rgb(0,16,32)'
+background-transparency-percent=16
+bold-color='rgb(255,255,240)'
+bold-color-same-as-fg=false
+bold-is-bright=true
+cursor-background-color='rgb(0,192,224)'
+cursor-colors-set=true
+default-size-columns=120
+default-size-rows=32
+font='Monospace 15'
+foreground-color='rgb(240,240,255)'
+highlight-colors-set=true
+highlight-foreground-color='rgb(255,255,0)'
+palette=['rgb(46,52,54)', 'rgb(204,0,0)', 'rgb(78,154,6)', 'rgb(196,160,0)', 'rgb(52,101,164)', 'rgb(117,80,123)', 'rgb(6,152,154)', 'rgb(211,215,207)', 'rgb(85,87,83)', 'rgb(239,41,41)', 'rgb(138,226,52)', 'rgb(252,233,79)', 'rgb(114,159,207)', 'rgb(173,127,168)', 'rgb(52,226,226)', 'rgb(238,238,236)']
+use-system-font=false
+use-theme-colors=false
+use-theme-transparency=false
+use-transparent-background=true
+visible-name='WotLK'

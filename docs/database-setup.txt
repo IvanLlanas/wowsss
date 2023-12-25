@@ -1,0 +1,15 @@
+
+To accept connection from other hosts:
+$ sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+or
+$ sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+and:
+bind-address = 0.0.0.0
+// In MySQL additionally:
+mysqlx-bind-address = 0.0.0.0
+
+mysql -u root -p
+>CREATE USER 'root'@'%' IDENTIFIED BY '1234';
+>GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+
+Do the same for any other user you want to grant access from other hosts.
