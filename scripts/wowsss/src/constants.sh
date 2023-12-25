@@ -284,9 +284,10 @@ function define_constants_1 ()
    cons_url_catacysm_sources_github="https://github.com/The-Cataclysm-Preservation-Project/TrinityCore.git"
    cons_url_catacysm_sources_project="https://github.com/The-Cataclysm-Preservation-Project/TrinityCore"
 
-   cons_wotlk_data_url="https://github.com/IvanLlanas/wotlk-server-data-files/releases/download/v16/data.7z"
-   cons_cataclysm_data_url="https://github.com/IvanLlanas/cataclysm-server-data-files/releases/download/v2312/data.7z"
-   cons_cataclysm_sql_url="https://github.com/The-Cataclysm-Preservation-Project/TrinityCore/releases/download/TDB434.22011/TDB_full_434.22011_2022_01_09.7z"
+   cons_url_wotlk_data="https://github.com/IvanLlanas/wotlk-server-data-files/releases/download/v16/data.7z"
+   cons_url_cataclysm_data="https://github.com/IvanLlanas/cataclysm-server-data-files/releases/download/v2312/data.7z"
+   # cons_url_cataclysm_sql="https://github.com/IvanLlanas/cataclysm-server-sql-files/releases/download/v2201/sql-files.7z"
+   cons_url_cataclysm_sql="https://github.com/The-Cataclysm-Preservation-Project/TrinityCore/releases/download/TDB434.22011/TDB_full_434.22011_2022_01_09.7z"
 
    # Linux packages
    cons_packages_wowsss="git p7zip-full unzip gcp screen wget sox"

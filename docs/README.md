@@ -1,48 +1,50 @@
-     __      __    __      __________________________
-    /  \    /  \__/  \    /  \ _____/  _____/  _____/
-    \   \/\/  /  _ \  \/\/   /____  \_____  \_____  \ 
-     \       (  (_) )       /        \       \       \
-      \__/\  /\____/\__/\  /_______  /_____  /_____  /
-           \/            \/        \/      \/      \/ 1.0
+            __      __    __      __________________________
+           /  \    /  \__/  \    /  \ _____/  _____/  _____/
+           \   \/\/  /  _ \  \/\/   /____  \_____  \_____  \
+            \       (  (_) )       /        \       \       \
+             \__/\  /\____/\__/\  /_______  /_____  /_____  /
+                  \/            \/        \/      \/      \/ 1.0
 
-# World of Warcraft Server Script System
+# _World of Warcraft_ Server Script System
 [Github repository](https://github.com/IvanLlanas/wowsss)
 
 ## Description
 WoWSSS is a script system designed to install and manage a World of Warcraft private server from scratch.
-It uses [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) for a "Wrath of the Lich King" server 
-and [TrinityCore](https://github.com/azerothcore/azerothcore-wotlk) for a "Cataclysm" server.
+It uses [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) for a "Wrath of the Lich King" server
+and [TrinityCore](https://github.com/The-Cataclysm-Preservation-Project/TrinityCore) for a "Cataclysm" server.
 
 ## Installation
 Just clone WoWSSS from [github](https://www.github.com/IvanLlanas/wowsss) anywhere in your (sudoer) user directory and launch the `wowsss.sh` script to start the installation and compilation process.
-Once WoWSSS founds any server installation it will show the maintenance menu from where the servers can be started/stopped, backed up and updated.
+From now on, every time WoWSSS founds any server installation it will show the maintenance menu, where you'll be able to start/stop the servers, update and compile the sources and make backups.
 
-Launch the servers. Wait for worldserver to populate the databases (w - to change to world server). Answer yes whenever it asks about populating an empty database.
->shutdown server 1
-^A^D to get back to the menu.
-I) -> IPs
+### First start
 
+Assuming you've configured or let WoWSSS configure the database servers, you have to start the servers and let them do the databases job.
+Wait for `worldserver` to populate the databases (`w` - to change to `worldserver` and watch the progress). Answer "_yes_" whenever it asks about populating an empty database.
+Once you get the `worldserver` user prompt (`AC>` or `TC>`) you must create a user (an admin user would be wise):
 
----------------------------------------
+(You can press `^A^D` to get back to the WoWSSS main menu at any time.)
 
-Once WOWSSS has installed all software packages, compiled and linked the server sources, downloaded the data files, setup the databases and database server, you will be able to start the servers.
-The first you will need to do is to create a WoW account in the `worldserver` console:
-AC> account create admin admin admin
-AC> Account created: admin
-AC> account set gmlevel admin 3 -1
-AC> You change security level of account ADMIN to 3.
+| AzerothCore/WotLK                         | TrinitiyCore/Cataclysm                |
+| ------------------------------------------|---------------------------------------|
+| _Create and admin user_                   | _Create and admin user_               |
+| ------------------------------------------|-------------------------------------- |
+| `AC> account create admin admin`          | `TC> bnetacount create admin@ admin`  |
+| `AC> account set gmlevel admin 3 -1`      | `TC> account set gmlevel 1#1 3 -1`    |
+| ------------------------------------------|-------------------------------------- |
+| _Create a player user_                    | _Create a player user_                |
+| ------------------------------------------|-------------------------------------- |
+| AC> account create player player          | `TC> bnetacount create player@ player`|
+| ------------------------------------------|-------------------------------------- |
+| _Shutdown the server_                     | _Shutdown the server_                 |
+| ------------------------------------------|-------------------------------------- |
+| `AC> shutdown server 1`                   | `TC> shutdown server 1`               |
+| ------------------------------------------|-------------------------------------- |
 
-You'll be stuck trying to enter the AzerothCore realm. No luck since it is defined in 127.0.0.1.
-You'll have to change the realm definition in the realmlist table in the acore_auth database:
-STOP the servers.
-realmlist.sh
+Stop the servers.
 
-## Procedure
-Every time acscs.sh is run it will check all AzerothCore's requierements and it will try to install or configure any of them missing.
+Last step: configure the server IPs:
 
-## Hints
-Add the next alias to your user's `.bash_aliases`:
-```
-alias wow="/home/your-user/wotlk/scripts/acscs/acscs.sh"
-```
-so you can call the script by simply typing `wow` in the shell.
+__`D`__) __Databases__ -> __`I`__) __Configure realm IPs__ -> __`1`__) __Private server__
+
+Restart the servers. Configure your _Windows_ client and start playing.

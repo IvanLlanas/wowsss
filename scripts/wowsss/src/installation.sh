@@ -414,8 +414,8 @@ function initial_check_data_files ()
    local filename=$var_dir_temp/data.7z
    local url=
    case $var_current_mode in
-        $MODE_WOTLK) url="$cons_wotlk_data_url";;
-    $MODE_CATACLYSM) url="$cons_cataclysm_data_url";;
+        $MODE_WOTLK) url="$cons_url_wotlk_data";;
+    $MODE_CATACLYSM) url="$cons_url_cataclysm_data";;
    esac
 
    # 900 seconds timeout is crazy.
@@ -446,7 +446,7 @@ function initial_check_sql_files ()
          local filename=$var_dir_temp/sql.7z
 
          # 900 seconds timeout is crazy.
-         wget --output-document="$filename" --timeout=30 "$cons_cataclysm_sql_url"
+         wget --output-document="$filename" --timeout=30 "$cons_url_cataclysm_sql"
          result=$?
          if [ $result -ne 0 ]; then
             print_fatal_error "$cons_msg_error_download_sql"
