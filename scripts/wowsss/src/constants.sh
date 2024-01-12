@@ -145,6 +145,8 @@ function define_constants_1 ()
    cons_lit_internal_ip="Internal IP"
    cons_lit_external_ip="External IP"
    cons_lit_cores="cores"
+   cons_lit_none_="[none]"
+   cons_lit_multiple_="[multiple]"
 
    cons_mode_selection_1="${indent_sh}Select the server mode you desire:"
    cons_option_mode_wotlk="${indent_op}1 - $name_wotlk_full"

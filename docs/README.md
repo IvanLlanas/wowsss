@@ -29,8 +29,10 @@ Once you get the `worldserver` user prompt (`AC>` or `TC>`) you must create a us
 | ------------------------------------------|---------------------------------------|
 | _Create and admin user_                   | _Create and admin user_               |
 | ------------------------------------------|-------------------------------------- |
-| `AC> account create admin admin`          | `TC> bnetacount create admin@ admin`  |
+| `AC> account create admin admin`          | `TC> bnetaccount create admin@ admin`
+|                                           | TC>Battle.net account created: admin@ with game account 1#1 |
 | `AC> account set gmlevel admin 3 -1`      | `TC> account set gmlevel 1#1 3 -1`    |
+                                              TC>Security level of account 1#1 changed to 3.|
 | ------------------------------------------|-------------------------------------- |
 | _Create a player user_                    | _Create a player user_                |
 | ------------------------------------------|-------------------------------------- |
@@ -48,3 +50,25 @@ Last step: configure the server IPs:
 __`D`__) __Databases__ -> __`I`__) __Configure realm IPs__ -> __`1`__) __Private server__
 
 Restart the servers. Configure your _Windows_ client and start playing.
+
+-------------------------
+.levelup 999
+.damage XXXX
+.gm fly on
+.learn all my class
+.learn all my spells
+.modify hp 100000000
+.modify mana 100000000
+.modify speed 50
+.modify money 10000000000
+
+Item                            ID       Spell
+-----------------------------------------------
+Portable Hole                   51809    -
+Haunted Memento                 40110    -
+Tabard of the Argent Dawn       22999    -
+Rivendare's Reins               13335    10440
+Black Qiraji Tank               21176    26656
+Reins of the Onyxian Drake      49636    69395
+Reins of the Albino Drake       44178    60025
+Reins of the Ancient Frostsaber 12302    16056

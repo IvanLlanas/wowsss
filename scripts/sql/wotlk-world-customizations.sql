@@ -15,6 +15,23 @@ UPDATE item_template SET stackable=200 WHERE name="Mageweave Cloth";
 UPDATE item_template SET stackable=200 WHERE name="Runecloth";
 UPDATE item_template SET stackable=200 WHERE name="Netherweave Cloth";
 UPDATE item_template SET stackable=200 WHERE name="FrostWeave Cloth";
+UPDATE item_template SET stackable=200 WHERE name="Soul Essence";
+
+/* Change stack sizes for essence materials.  */
+/* ------------------------------------------ */
+UPDATE item_template SET stackable=200 WHERE name="Primal Earth";
+UPDATE item_template SET stackable=200 WHERE name="Primal Water";
+UPDATE item_template SET stackable=200 WHERE name="Primal Air";
+UPDATE item_template SET stackable=200 WHERE name="Primal Fire";
+UPDATE item_template SET stackable=200 WHERE name="Primal Shadow";
+UPDATE item_template SET stackable=200 WHERE name="Primal Life";
+UPDATE item_template SET stackable=200 WHERE name="Primal Mana";
+UPDATE item_template SET stackable=200 WHERE name="Eternal Earth";
+UPDATE item_template SET stackable=200 WHERE name="Eternal Water";
+UPDATE item_template SET stackable=200 WHERE name="Eternal Air";
+UPDATE item_template SET stackable=200 WHERE name="Eternal Fire";
+UPDATE item_template SET stackable=200 WHERE name="Eternal Shadow";
+UPDATE item_template SET stackable=200 WHERE name="Eternal Life";
 
 /* Change stack sizes for mining materials.  */
 /* ----------------------------------------- */

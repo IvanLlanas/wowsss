@@ -17,6 +17,10 @@ TrinityCore-Cataclysm (required SQL files)
 
 TrinityCore-MoP (servers sources)
    https://github.com/Legends-of-Azeroth
+   https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8
+
+TrinityCore-MoP (servers sources)
+   https://github.com/ProjectSkyfire/SkyFire_548
 
 Mangos GM commands
    https://github.com/dkpminus/mangos-gm-commands

@@ -230,8 +230,6 @@ function database_import_from_script ()
 function database_get_realm_info ()
 {
    var_realm_count=$(_get_realm_count)
-   cons_lit_none_="[none]"
-   cons_lit_multiple_="[multiple]"
    case $var_realm_count in
       1) var_realm_name=$(_get_realm_name)
          var_realm_external_ip=$(_get_realm_ip1)
