@@ -46,6 +46,17 @@ CATACLYSM_DB_WORLD_PORT=$DB_SERVER_PORT
 CATACLYSM_DB_CHARACTERS_PORT=$DB_SERVER_PORT
 CATACLYSM_DB_HOTFIXES_PORT=$DB_SERVER_PORT
 
+# MoP databases
+MOP_DB_AUTH_NAME=mop_auth
+MOP_DB_WORLD_NAME=mop_world
+MOP_DB_CHARACTERS_NAME=mop_characters
+MOP_DB_AUTH_HOST=$DB_SERVER_IP
+MOP_DB_WORLD_HOST=$DB_SERVER_IP
+MOP_DB_CHARACTERS_HOST=$DB_SERVER_IP
+MOP_DB_AUTH_PORT=$DB_SERVER_PORT
+MOP_DB_WORLD_PORT=$DB_SERVER_PORT
+MOP_DB_CHARACTERS_PORT=$DB_SERVER_PORT
+
 # Advanced settings ------------------------------------------------------------
 # ------------------------------------------------------------------------------
 

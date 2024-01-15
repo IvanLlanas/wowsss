@@ -56,22 +56,27 @@ function define_variables_1 ()
    var_dir_sources=
    var_dir_sources_wotlk="$var_dir_base/sources/wotlk"
    var_dir_sources_cataclysm="$var_dir_base/sources/cataclysm"
+   var_dir_sources_mop="$var_dir_base/sources/mop"
    # Data directory
    var_dir_data=
    var_dir_data_wotlk="$var_dir_base/data/wotlk"
    var_dir_data_cataclysm="$var_dir_base/data/cataclysm"
+   var_dir_data_mop="$var_dir_base/data/mop"
    # Servers directory
    var_dir_servers=
    var_dir_servers_wotlk="$var_dir_base/servers/wotlk"
    var_dir_servers_cataclysm="$var_dir_base/servers/cataclysm"
+   var_dir_servers_mop="$var_dir_base/servers/mop"
    # Servers binaries
    var_dir_bin=
    var_dir_bin_wotlk="$var_dir_servers_wotlk/bin"
    var_dir_bin_cataclysm="$var_dir_servers_cataclysm/bin"
+   var_dir_bin_mop="$var_dir_servers_mop/bin"
    # Servers directory
    var_dir_config=
    var_dir_config_wotlk="$var_dir_servers_wotlk/etc"
    var_dir_config_cataclysm="$var_dir_servers_cataclysm/etc"
+   var_dir_config_mop="$var_dir_servers_mop/etc"
 
    # Server binaries (full path)
    var_bin_authserver=
@@ -93,6 +98,7 @@ function define_variables_1 ()
    # Availables installations
    var_wotlk_present=0
    var_cataclysm_present=0
+   var_mop_present=0
    # Database engine being used during this session.
    var_current_dbengine=
    # Installation mode being used during this session.

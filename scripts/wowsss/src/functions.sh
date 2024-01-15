@@ -277,6 +277,9 @@ function print_full_width_server_colors ()
     $MODE_CATACLYSM) bg=$_c_cataclysm_bg
                      fg=$_c_cataclysm_fg
                      ;;
+          $MODE_MOP) bg=$_c_mop_bg
+                     fg=$_c_mop_fg
+                     ;;
    esac
    echo -e $fg$bg"  ${msg}${filler}"$_ansi_off
 }
@@ -365,6 +368,11 @@ function print_menu_title ()
             cf1="\e[38;5;202m"
             cf2="\e[38;5;222m"
             ;;
+          $MODE_MOP)
+            cbg="\e[48;5;22m"
+            cf1="\e[38;5;231m"
+            cf2="\e[38;5;229m"
+            ;;
    esac
    print_x $x $cbg$cf1"---"
    count=$(expr $count - 3)
@@ -407,11 +415,14 @@ function show_wosss_info ()
 
    # Server mode
    case $var_current_mode in
-        $MODE_WOTLK)
+    $MODE_WOTLK)
          print_literal_value "$_c_bold2$name_wotlk_full" "$cons_lit_info_mode"
          ;;
     $MODE_CATACLYSM)
          print_literal_value "$_c_bold2$name_cataclysm_full" "$cons_lit_info_mode"
+         ;;
+    $MODE_MOP)
+         print_literal_value "$_c_bold2$name_mop_full" "$cons_lit_info_mode"
          ;;
     *)
          print_error_message "$cons_error_undefined_mode_q"

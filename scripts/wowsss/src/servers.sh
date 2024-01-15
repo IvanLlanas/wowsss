@@ -92,6 +92,9 @@ function servers_setup_default_config_files ()
          # sed -i 's/MySQLExecutable\s\{0,\}=.*/MySQLExecutable = "\/usr\/bin\/mysql"/' $filename1
          sed -i 's/LoginDatabaseInfo\s\{0,\}=.*/LoginDatabaseInfo = "'$var_db_auth_host';'$var_db_auth_port';'$var_db_servers_user';'$var_db_servers_pass';'$var_db_auth_name'"/' $filename1
 
+         if [ $var_current_mode = $MODE_MOP ]; then
+            sed -i 's/Updates.EnableDatabases\s\{0,\}=.*/Updates.EnableDatabases = 0/' $filename1
+         fi
          print_warning_message "<b>$var_dir_config/$filename1</b>: $cons_msg_automatic_file_check"
       else
          print_error_message "<b>$filename2</b> $cons_lit_not_found_"
@@ -117,6 +120,9 @@ function servers_setup_default_config_files ()
          sed -i 's/CharacterDatabaseInfo\s\{0,\}=.*/CharacterDatabaseInfo = "'$var_db_chars_host';'$var_db_chars_port';'$var_db_servers_user';'$var_db_servers_pass';'$var_db_chars_name'"/' $filename1
          if [ $var_current_mode = $MODE_CATACLYSM ]; then
             sed -i 's/HotfixDatabaseInfo\s\{0,\}=.*/HotfixDatabaseInfo    = "'$var_db_hotfixes_host';'$var_db_hotfixes_port';'$var_db_servers_user';'$var_db_servers_pass';'$var_db_hotfixes_name'"/' $filename1
+         fi
+         if [ $var_current_mode = $MODE_MOP ]; then
+            sed -i 's/Updates.EnableDatabases\s\{0,\}=.*/Updates.EnableDatabases = 0/' $filename1
          fi
          print_warning_message "<b>$var_dir_config/$filename1</b>: $cons_msg_automatic_file_check"
       else

@@ -106,7 +106,7 @@ nano authserver.conf
 Make sure the next variables have the right values:
 * __`LogsDir`__: directory where the log files will be written.
     *   `LogsDir="/home/wow/wotlk/logs"`
-* __`MySQLExecutable`__: client used to make bulk operation with the databases. Should be ok leaving it blank.
+* __`MySQLExecutable`__: client used to make bulk operations with the databases. Should be ok leaving it blank.
     *   `MySQLExecutable="/usr/bin/mysql"`
 * __`LoginDatabaseInfo`__: authentication database name, host, port, user, password.
     *   `LoginDatabaseInfo = "127.0.0.1;3306;wows;1234;wotlk_auth"`

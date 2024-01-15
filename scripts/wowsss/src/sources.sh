@@ -86,13 +86,17 @@ function servers_sources_download ()
 
    # Download the main server sources
    mkdir -p "$var_dir_sources"
+   cd "$var_dir_sources"
    print_info_message "$cons_msg_cloning_sources"
    case $var_current_mode in
-        $MODE_WOTLK)
+    $MODE_WOTLK)
             git clone "$cons_url_wotlk_sources_github" --branch master --single-branch "$var_dir_sources"
             ;;
     $MODE_CATACLYSM)
             git clone "$cons_url_catacysm_sources_github" "$var_dir_sources"
+            ;;
+    $MODE_MOP)
+            git clone "$cons_url_mop_sources_github" "$var_dir_sources"
             ;;
    esac
 
@@ -135,6 +139,9 @@ function servers_sources_download ()
       $MODE_CATACLYSM)
          cmake ../ -DCMAKE_INSTALL_PREFIX=$var_dir_servers/ -DSERVERS=1 -DTOOLS=1 -DWITH_WARNINGS=1
          ;;
+      $MODE_MOP)
+         cmake ../ -DCMAKE_INSTALL_PREFIX=$var_dir_servers/ -DSERVERS=1 -DTOOLS=1 -DWITH_WARNINGS=1
+         ;;
    esac
    result=$?
    if [ $result -ne 0 ] ; then
@@ -145,6 +152,8 @@ function servers_sources_download ()
          return $result
       fi
    fi
+   # Ugly calling this from here but...
+   initial_check_sql_files
 }
 
 # ------------------------------------------------------------------------------
@@ -226,7 +235,7 @@ function servers_sources_update ()
    print_info_message "$cons_msg_checking_updates_for_<b>$var_server_name</b>..."
    cd $var_dir_sources
    case $var_current_mode in
-        $MODE_WOTLK)
+    $MODE_WOTLK)
             # For AzerothCore-WotLK:
             git pull origin master
             if [ $? -eq 0 ]; then
@@ -238,6 +247,13 @@ function servers_sources_update ()
             git pull origin master
             ;;
     $MODE_CATACLYSM)
+            # For AzerothCore-WotLK:
+            git pull origin master
+            if [ $? -eq 0 ]; then
+               servers_update_server_versions
+            fi
+            ;;
+    $MODE_MOP)
             # For AzerothCore-WotLK:
             git pull origin master
             if [ $? -eq 0 ]; then

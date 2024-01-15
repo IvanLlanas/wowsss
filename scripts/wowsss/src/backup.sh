@@ -60,7 +60,8 @@ function databases_backup ()
       files=$files" $script"
       print_info_message "$cons_lit_extracting <b>$database</b>..."
       mysqldump --user=$var_db_user --password=$var_db_pass $database > $script
-      if [ $database = $cons_wotlk_db_characters_name ] || [ $database = $cons_cataclysm_db_characters_name ]
+      # We'll additionally split data and structure for the characters database.
+      if [ $database = $cons_wotlk_db_characters_name ] || [ $database = $cons_cataclysm_db_characters_name ] || [ $database = $cons_mop_db_characters_name ]
       then
          script=$database-structure.sql
          files=$files" $script"
@@ -105,6 +106,9 @@ function main_menu_backup_servers ()
    fi
    if [ -d $var_dir_config_cataclysm ]; then
       cfg=$cfg" "${var_dir_config_cataclysm:$n}/
+   fi
+   if [ -d $var_dir_config_mop ]; then
+      cfg=$cfg" "${var_dir_config_mop:$n}/
    fi
    
    if [ -d $var_dir_base/_base ]; then # Developer's

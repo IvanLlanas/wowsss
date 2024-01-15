@@ -280,11 +280,14 @@ function main_menu_backup_databases_critical ()
 {
    print_full_width "$cons_option_backup_databases_critical"
    case $var_current_mode in
-        $MODE_WOTLK)
+    $MODE_WOTLK)
             databases_backup "$var_current_mode_prefix-databases-auth-chars" "$cons_wotlk_db_auth_name $cons_wotlk_db_characters_name"
             ;;
     $MODE_CATACLYSM)
             databases_backup "$var_current_mode_prefix-databases-auth-chars" "$cons_cataclysm_db_auth_name $cons_cataclysm_db_characters_name"
+            ;;
+    $MODE_MOP)
+            databases_backup "$var_current_mode_prefix-databases-auth-chars" "$cons_mop_db_auth_name $cons_mop_db_characters_name"
             ;;
    esac
    print_info_message "$cons_msg_done"
@@ -298,11 +301,14 @@ function main_menu_backup_databases_other ()
 {
    print_full_width "$cons_option_backup_databases_other"
    case $var_current_mode in
-        $MODE_WOTLK)
+    $MODE_WOTLK)
             databases_backup "$var_current_mode_prefix-databases-world" "$cons_wotlk_db_world_name"
             ;;
     $MODE_CATACLYSM)
             databases_backup "$var_current_mode_prefix-databases-world-hotfixes" "$cons_cataclysm_db_world_name $cons_cataclysm_db_hotfixes_name"
+            ;;
+    $MODE_MOP)
+            databases_backup "$var_current_mode_prefix-databases-world" "$cons_mop_db_world_name"
             ;;
    esac
 }

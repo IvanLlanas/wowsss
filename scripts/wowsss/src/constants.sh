@@ -10,8 +10,8 @@ function define_constants_1 ()
 {
    cons_lit_product_name_short="WoWSSS"
    cons_lit_product_name_long="World of Warcraft Server Script System"
-   cons_lit_product_version="1.0"
-   cons_lit_product_date="2023-12-21"
+   cons_lit_product_version="1.1"
+   cons_lit_product_date="2024-01-14"
 
    # ANSI codes - Uncomment those being used.
    # ----------
@@ -60,6 +60,8 @@ function define_constants_1 ()
    _c_wotlk_fg="\e[38;5;18m"
    _c_cataclysm_bg="\e[48;5;88m"
    _c_cataclysm_fg="\e[38;5;214m"
+   _c_mop_bg="\e[48;5;28m"
+   _c_mop_fg="\e[38;5;230m"
 
    # Messages
    _bold1='<b>'    # Bold text delimiter 1 - do not use spaces!
@@ -69,6 +71,7 @@ function define_constants_1 ()
    MODE_NONE=0
    MODE_WOTLK=1
    MODE_CATACLYSM=2
+   MODE_MOP=3
 
    # Database engines
    DBENGINE_NONE=0
@@ -82,23 +85,29 @@ function define_constants_1 ()
    cons_cataclysm_db_world_name=$CATACLYSM_DB_WORLD_NAME
    cons_cataclysm_db_characters_name=$CATACLYSM_DB_CHARACTERS_NAME
    cons_cataclysm_db_hotfixes_name=$CATACLYSM_DB_HOTFIXES_NAME
-
+   cons_mop_db_auth_name=$MOP_DB_AUTH_NAME
+   cons_mop_db_world_name=$MOP_DB_WORLD_NAME
+   cons_mop_db_characters_name=$MOP_DB_CHARACTERS_NAME
    cons_wotlk_db_auth_host=$WOTLK_DB_AUTH_HOST
    cons_wotlk_db_world_host=$WOTLK_DB_WORLD_HOST
    cons_wotlk_db_characters_host=$WOTLK_DB_CHARACTERS_HOST
-   cons_wotlk_db_hotfixes_host=$WOTLK_DB_HOTFIXES_HOST
    cons_cataclysm_db_auth_host=$CATACLYSM_DB_AUTH_HOST
    cons_cataclysm_db_world_host=$CATACLYSM_DB_WORLD_HOST
    cons_cataclysm_db_characters_host=$CATACLYSM_DB_CHARACTERS_HOST
    cons_cataclysm_db_hotfixes_host=$CATACLYSM_DB_HOTFIXES_HOST
+   cons_mop_db_auth_host=$MOP_DB_AUTH_HOST
+   cons_mop_db_world_host=$MOP_DB_WORLD_HOST
+   cons_mop_db_characters_host=$MOP_DB_CHARACTERS_HOST
    cons_wotlk_db_auth_port=$WOTLK_DB_AUTH_PORT
    cons_wotlk_db_world_port=$WOTLK_DB_WORLD_PORT
    cons_wotlk_db_characters_port=$WOTLK_DB_CHARACTERS_PORT
-   cons_wotlk_db_hotfixes_port=$WOTLK_DB_HOTFIXES_PORT
    cons_cataclysm_db_auth_port=$CATACLYSM_DB_AUTH_PORT
    cons_cataclysm_db_world_port=$CATACLYSM_DB_WORLD_PORT
    cons_cataclysm_db_characters_port=$CATACLYSM_DB_CHARACTERS_PORT
    cons_cataclysm_db_hotfixes_port=$CATACLYSM_DB_HOTFIXES_PORT
+   cons_wotlk_db_auth_port=$MOP_DB_AUTH_PORT
+   cons_wotlk_db_world_port=$MOP_DB_WORLD_PORT
+   cons_wotlk_db_characters_port=$MOP_DB_CHARACTERS_PORT
 
    # Update REMOTE_BACKUPS_DIR using functions.
    if [ ! $REMOTE_BACKUPS_DIR ]; then
@@ -116,10 +125,13 @@ function define_constants_1 ()
    name_mysql_full="MySQL"
    name_wotlk_full="Wrath of the Lich King (AzerothCore)"
    name_cataclysm_full="Cataclysm (TrinityCore)"
+   name_mop_full="Mists of Pandaria (Legends-of-Azeroth)"
    cons_lit_woltk_server_name="AzerothCore-WotLK"
    cons_lit_cataclysm_server_name="TrinityCore-Cataclysm"
+   cons_lit_mop_server_name="LegendsOfAzeroth-MoP"
    cons_wotlk_prefix="wotlk"
    cons_cataclysm_prefix="cataclysm"
+   cons_mop_prefix="mop"
 
    cons_confirmation="ok"
    cons_msg_not_confirmed="Not confirmed."
@@ -151,7 +163,8 @@ function define_constants_1 ()
    cons_mode_selection_1="${indent_sh}Select the server mode you desire:"
    cons_option_mode_wotlk="${indent_op}1 - $name_wotlk_full"
    cons_option_mode_cataclysm="${indent_op}2 - $name_cataclysm_full"
-   cons_mode_selection_2="${indent_sh}Select option (1-2): "
+   cons_option_mode_mop="${indent_op}3 - $name_mop_full"
+   cons_mode_selection_2="${indent_sh}Select option (1-3): "
 
    cons_dbengine_selection_1="${indent_sh}Select the database engine you desire:"
    cons_option_mode_mariadb="${indent_op}1 - $name_mariadb_full"
@@ -216,6 +229,9 @@ function define_constants_1 ()
    cons_lit_checking_database="Checking database"
    cons_lit_creating_database="Creating database"
    cons_lit_cannot_create_db="Cannot create database"
+   cons_lit_cannot_populate_db="Cannot populate database"
+   cons_lit_database_populated="Database populated"
+   cons_lit_database_populating="Populating database"
 
    cons_msg_restoring_session_1="Restoring session"
    cons_msg_restoring_session_2="Press <b>Ctrl+A</b> + <b>Ctrl+D</b> to return."
@@ -285,11 +301,15 @@ function define_constants_1 ()
    cons_url_wotlk_sources_project="https://github.com/azerothcore/azerothcore-wotlk"
    cons_url_catacysm_sources_github="https://github.com/The-Cataclysm-Preservation-Project/TrinityCore.git"
    cons_url_catacysm_sources_project="https://github.com/The-Cataclysm-Preservation-Project/TrinityCore"
+   cons_url_mop_sources_github="https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8.git"
+   cons_url_mop_sources_project="https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8"
 
    cons_url_wotlk_data="https://github.com/IvanLlanas/wotlk-server-data-files/releases/download/v16/data.7z"
    cons_url_cataclysm_data="https://github.com/IvanLlanas/cataclysm-server-data-files/releases/download/v2312/data.7z"
    # cons_url_cataclysm_sql="https://github.com/IvanLlanas/cataclysm-server-sql-files/releases/download/v2201/sql-files.7z"
    cons_url_cataclysm_sql="https://github.com/The-Cataclysm-Preservation-Project/TrinityCore/releases/download/TDB434.22011/TDB_full_434.22011_2022_01_09.7z"
+   cons_url_mop_data="https://github.com/IvanLlanas/mop-server-data-files/releases/download/v2401/data.7z"
+   cons_url_mop_sql="https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8/releases/download/WDB20231230/world_548_20231230.7z"
 
    # Linux packages
    cons_packages_wowsss="git p7zip-full unzip gcp screen wget sox"
@@ -302,12 +322,21 @@ function define_constants_1 ()
    # Debian will only support MariaDB server for the time being.
    cons_packages_debian_wotlk_mysql=$cons_packages_debian_wotlk_mariadb
 
-   cons_packages_ubuntu_cataclysm="git clang cmake make gcc g++ libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev p7zip"
+   cons_packages_ubuntu_cataclysm="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev"
    cons_packages_debian_cataclysm=$cons_packages_ubuntu_cataclysm
    cons_packages_ubuntu_cataclysm_mariadb="mariadb-server libmariadb-dev libmariadb-dev-compat"
    cons_packages_debian_cataclysm_mariadb=$cons_packages_debian_wotlk_mariadb
    cons_packages_ubuntu_cataclysm_mysql=$cons_packages_ubuntu_wotlk_mysql
+   # Debian will only support MariaDB server for the time being.
    cons_packages_debian_cataclysm_mysql=$cons_packages_debian_wotlk_mysql
+
+   cons_packages_ubuntu_mop="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev libace-dev"
+   cons_packages_debian_mop=$cons_packages_ubuntu_wotlk
+   cons_packages_ubuntu_mop_mariadb="mariadb-server mariadb-client libmariadb-dev libmariadb-dev-compat"
+   cons_packages_debian_mop_mariadb="mariadb-server default-libmysqlclient-dev"
+   cons_packages_ubuntu_mop_mysql=$cons_packages_ubuntu_wotlk_mysql
+   # Debian will only support MariaDB server for the time being.
+   cons_packages_debian_mop_mysql=$cons_packages_debian_wotlk_mariadb
 
    # Application to play a sound file (ogg) and its command line parameters.
    cons_playsound="play -q"
@@ -345,6 +374,7 @@ function define_constants_2 ()
    cons_msg_tips_setup_db_server_0_mysql_2="${indent_op}$ sudo mysql"
    cons_msg_tips_setup_db_server_0_mysql_3="${indent_op}mysql> ALTER USER '$var_db_user'@'localhost' IDENTIFIED WITH caching_sha2_password BY '$var_db_pass'; FLUSH PRIVILEGES;"
 
+   cons_msg_db_setup_0_option_question="$cons_msg_db_setup_0_option_question"
    cons_msg_db_setup_0_option_1="${indent_op}1 - Yes, please, make these changes for me and put my database server at risk."
    cons_msg_db_setup_0_option_2="${indent_op}2 - Naah, thanks, I don't trust you, I'll do this myself."
    cons_msg_db_setup_enter_option="${indent_sh}Enter option (1-2): "
@@ -369,4 +399,3 @@ function define_constants_2 ()
    cons_error_no_realm_found="No realm found in table <b>$var_db_auth_name.realmlist</b>."
    cons_error_multiple_realm_found="Multiple realms found in table <b>$var_db_auth_name.realmlist</b>. This needs a manual configuration, and you know it."
 }
-

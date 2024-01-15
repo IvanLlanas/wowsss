@@ -6,6 +6,7 @@
 # function initial_check_databases ()
 # function database_get_realm_info ()
 # function database_setup_realm ()
+# function _database_check_table_exists (db, tablename)
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
@@ -101,8 +102,16 @@ function databases_check_create ()
    _database_check_create "$var_db_auth_name"
    _database_check_create "$var_db_world_name"
    _database_check_create "$var_db_chars_name"
+
    if [[ $var_current_mode = $MODE_CATACLYSM ]]; then
       _database_check_create "$var_db_hotfixes_name"
+   fi
+
+   if [[ $var_current_mode = $MODE_MOP ]]; then
+      # At this point we surely have the required SQL scripts.
+      _database_check_table_exists "$var_db_auth_name" "realmlist" "$var_dir_sources/sql/base/auth.sql"
+      _database_check_table_exists "$var_db_chars_name" "characters" "$var_dir_sources/sql/base/characters.sql"
+      _database_check_table_exists "$var_db_world_name" "item_template" "$var_dir_sources/world_548_20231230.sql"
    fi
 }
 
@@ -137,7 +146,7 @@ function database_check_enable_admin_access ()
          ;;
       esac
       CR
-      print_text "So, do you want me to do it?"
+      print_text "$cons_msg_db_setup_0_option_question"
       print_text "$cons_msg_db_setup_0_option_1"
       print_text "$cons_msg_db_setup_0_option_2"
       read_answer "$cons_msg_db_setup_enter_option"
@@ -254,7 +263,7 @@ function database_setup_realm ()
 {
    local ext_ip=$1
    local int_ip=$2
-   
+
    mysql -u $var_db_user -p$var_db_pass -e \
    "USE $var_db_auth_name; UPDATE realmlist SET address='$ext_ip', localAddress='$int_ip'"
 }
@@ -314,5 +323,45 @@ function _get_realm_ip2 ()
       echo "[ERROR]"
    else
       echo $result
+   fi
+}
+
+# ------------------------------------------------------------------------------
+# function _database_check_table_exists (db, tablename)
+# Returns the the "localAddress" of the realm in the current database.
+# ------------------------------------------------------------------------------
+function _database_check_table_exists ()
+{
+   local db=$1
+   local table=$2
+   local script=$3
+   local SQL_EXISTS='USE '$db'; SHOW TABLES LIKE "'$table'"'
+
+   local result=$(mysql -u $var_db_user -p$var_db_pass -e "$SQL_EXISTS" $DATABASE)
+   local result2=$?
+
+   if [ $result2 -ne 0 ]; then
+      print_fatal_error "error_executing_dbclient"
+   fi
+   if [[ $result ]]; then
+      return
+#     # Table exists
+#     local SQL_IS_EMPTY='USE '$db'; SELECT 1 FROM '$table' LIMIT 1'
+#     # Check if table has records
+#     if [[ $(mysql -u $var_db_user -p$var_db_pass -e "$SQL_IS_EMPTY" $DATABASE) ]]
+#     then
+#        # Table has records
+#     else
+#        # Table is empty
+#     fi
+   else
+      # Table does not exists
+      print_info_message "$cons_lit_database_populating <b>$db</b>."
+      mysql -u $var_db_user -p$var_db_pass $db < $script
+      result2=$?
+      if [ $result2 -ne 0 ]; then
+         print_fatal_error "$cons_lit_cannot_populate_db <b>$db</b>."
+      fi
+      print_warning_message "$cons_lit_database_populated <b>$db</b>."
    fi
 }

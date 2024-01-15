@@ -39,11 +39,20 @@ function select_server_mode ()
          c=""
       fi
    print_text "$c$cons_option_mode_cataclysm$_ansi_off"
+
+      if [ $var_mop_present -eq "$n" ]; then
+         c=$_c_disabled
+      else
+         c=""
+      fi
+   print_text "$c$cons_option_mode_mop$_ansi_off"
+
    CR
    read_answer "$cons_mode_selection_2"
    case $var_answer in
     "1") var_current_mode=$MODE_WOTLK;;
     "2") var_current_mode=$MODE_CATACLYSM;;
+    "3") var_current_mode=$MODE_MOP;;
    esac
 }
 
@@ -72,13 +81,18 @@ function detect_or_select_server_mode ()
       mode=$MODE_CATACLYSM
    fi
 
+   if [[ -f $var_dir_bin_mop/authserver && -f $var_dir_bin_mop/worldserver ]]; then
+      var_mop_present=1
+      mode=$MODE_MOP
+   fi
+
    if [[ $var_force_switch_mode -gt 0 ]]; then # Force asking the user for a (new) mode?
       var_current_mode=$MODE_NONE
       select_server_mode 1
       var_force_switch_mode=0
    else
       # Calculate total installations
-      var_available_modes=$(($var_wotlk_present + $var_cataclysm_present))
+      var_available_modes=$(($var_wotlk_present + $var_cataclysm_present + $var_mop_present))
       case $var_available_modes in
        0) CR
           print_warning_message "No server installation found. You have to decide which server to install."
@@ -93,7 +107,7 @@ function detect_or_select_server_mode ()
 
    # At this point we already know the MODE we want to use:
    case $var_current_mode in
-        $MODE_WOTLK)
+    $MODE_WOTLK)
             print_info_message "$cons_lit_initializing_<b>$cons_lit_woltk_server_name</b>..."
             var_current_mode_prefix="$cons_wotlk_prefix"
             var_server_name="$cons_lit_woltk_server_name"
@@ -106,6 +120,19 @@ function detect_or_select_server_mode ()
             var_ws_process_name="worldserver"
             var_bin_authserver="$var_dir_bin_wotlk/$var_as_process_name"
             var_bin_worldserver="$var_dir_bin_wotlk/$var_ws_process_name"
+
+            var_db_auth_name=$cons_wotlk_db_auth_name
+            var_db_world_name=$cons_wotlk_db_world_name
+            var_db_chars_name=$cons_wotlk_db_characters_name
+            var_db_auth_host=$cons_wotlk_db_auth_host
+            var_db_world_host=$cons_wotlk_db_world_host
+            var_db_chars_host=$cons_wotlk_db_characters_host
+            var_db_auth_port=$cons_wotlk_db_auth_port
+            var_db_world_port=$cons_wotlk_db_world_port
+            var_db_chars_port=$cons_wotlk_db_characters_port
+            var_db_hotfixes_name=
+            var_db_hotfixes_host=
+            var_db_hotfixes_port=
             ;;
     $MODE_CATACLYSM)
             print_info_message "$cons_lit_initializing_<b>$cons_lit_cataclysm_server_name</b>..."
@@ -120,6 +147,46 @@ function detect_or_select_server_mode ()
             var_ws_process_name="worldserver"
             var_bin_authserver="$var_dir_bin_cataclysm/$var_as_process_name"
             var_bin_worldserver="$var_dir_bin_cataclysm/$var_ws_process_name"
+            
+            var_db_auth_name=$cons_cataclysm_db_auth_name
+            var_db_world_name=$cons_cataclysm_db_world_name
+            var_db_chars_name=$cons_cataclysm_db_characters_name
+            var_db_auth_host=$cons_cataclysm_db_auth_host
+            var_db_world_host=$cons_cataclysm_db_world_host
+            var_db_chars_host=$cons_cataclysm_db_characters_host
+            var_db_auth_port=$cons_cataclysm_db_auth_port
+            var_db_world_port=$cons_cataclysm_db_world_port
+            var_db_chars_port=$cons_cataclysm_db_characters_port
+            var_db_hotfixes_name=$cons_cataclysm_db_hotfixes_name
+            var_db_hotfixes_host=$cons_cataclysm_db_hotfixes_host
+            var_db_hotfixes_port=$cons_cataclysm_db_hotfixes_port
+            ;;
+    $MODE_MOP)
+            print_info_message "$cons_lit_initializing_<b>$cons_lit_mop_server_name</b>..."
+            var_current_mode_prefix="$cons_mop_prefix"
+            var_server_name="$cons_lit_mop_server_name"
+            var_dir_sources=$var_dir_sources_mop
+            var_dir_servers=$var_dir_servers_mop
+            var_dir_bin=$var_dir_bin_mop
+            var_dir_data=$var_dir_data_mop
+            var_dir_config=$var_dir_config_mop
+            var_as_process_name="authserver"
+            var_ws_process_name="worldserver"
+            var_bin_authserver="$var_dir_bin_mop/$var_as_process_name"
+            var_bin_worldserver="$var_dir_bin_mop/$var_ws_process_name"
+
+            var_db_auth_name=$cons_mop_db_auth_name
+            var_db_world_name=$cons_mop_db_world_name
+            var_db_chars_name=$cons_mop_db_characters_name
+            var_db_auth_host=$cons_mop_db_auth_host
+            var_db_world_host=$cons_mop_db_world_host
+            var_db_chars_host=$cons_mop_db_characters_host
+            var_db_auth_port=$cons_mop_db_auth_port
+            var_db_world_port=$cons_mop_db_world_port
+            var_db_chars_port=$cons_mop_db_characters_port
+            var_db_hotfixes_name=
+            var_db_hotfixes_host=
+            var_db_hotfixes_port=
             ;;
     *)
             print_error_message "$cons_error_undefined_mode_q"
@@ -209,64 +276,7 @@ function detect_or_select_dbengine ()
          exit
          ;;
    esac
-
-   case $var_current_mode in
-        $MODE_WOTLK)
-         var_db_auth_name=$cons_wotlk_db_auth_name
-         var_db_world_name=$cons_wotlk_db_world_name
-         var_db_chars_name=$cons_wotlk_db_characters_name
-         var_db_auth_host=$cons_wotlk_db_auth_host
-         var_db_world_host=$cons_wotlk_db_world_host
-         var_db_chars_host=$cons_wotlk_db_characters_host
-         var_db_auth_port=$cons_wotlk_db_auth_port
-         var_db_world_port=$cons_wotlk_db_world_port
-         var_db_chars_port=$cons_wotlk_db_characters_port
-
-         var_db_hotfixes_name=
-         var_db_hotfixes_host=
-         var_db_hotfixes_port=
-         ;;
-    $MODE_CATACLYSM)
-         var_db_auth_name=$cons_cataclysm_db_auth_name
-         var_db_world_name=$cons_cataclysm_db_world_name
-         var_db_chars_name=$cons_cataclysm_db_characters_name
-         var_db_auth_host=$cons_cataclysm_db_auth_host
-         var_db_world_host=$cons_cataclysm_db_world_host
-         var_db_chars_host=$cons_cataclysm_db_characters_host
-         var_db_auth_port=$cons_cataclysm_db_auth_port
-         var_db_world_port=$cons_cataclysm_db_world_port
-         var_db_chars_port=$cons_cataclysm_db_characters_port
-
-         var_db_hotfixes_name=$cons_cataclysm_db_hotfixes_name
-         var_db_hotfixes_host=$cons_cataclysm_db_hotfixes_host
-         var_db_hotfixes_port=$cons_cataclysm_db_hotfixes_port
-         ;;
-   esac
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # ------------------------------------------------------------------------------
 # Checks if all packages in $1 are installed. If any package is missing it
@@ -330,6 +340,13 @@ function initial_check_required_packages ()
                   $DBENGINE_MYSQL) _check_packages "$cons_packages_ubuntu_cataclysm_mysql" "$cons_msg_checking_database_req_packages";;
                esac
                ;;
+             $MODE_MOP)
+               _check_packages "$cons_packages_ubuntu_mop" "$cons_msg_checking_server_req_packages"
+               case $var_current_dbengine in
+                $DBENGINE_MARIADB) _check_packages "$cons_packages_ubuntu_mop_mariadb" "$cons_msg_checking_database_req_packages";;
+                  $DBENGINE_MYSQL) _check_packages "$cons_packages_ubuntu_mop_mysql" "$cons_msg_checking_database_req_packages";;
+               esac
+               ;;
       esac
    else
       # Debian
@@ -346,6 +363,13 @@ function initial_check_required_packages ()
                case $var_current_dbengine in
                 $DBENGINE_MARIADB) _check_packages "$cons_packages_debian_cataclysm_mariadb" "$cons_msg_checking_database_req_packages";;
                   $DBENGINE_MYSQL) _check_packages "$cons_packages_debian_cataclysm_mysql" "$cons_msg_checking_database_req_packages";;
+               esac
+               ;;
+             $MODE_MOP)
+               _check_packages "$cons_packages_debian_mop" "$cons_msg_checking_server_req_packages"
+               case $var_current_dbengine in
+                $DBENGINE_MARIADB) _check_packages "$cons_packages_debian_mop_mariadb" "$cons_msg_checking_database_req_packages";;
+                  $DBENGINE_MYSQL) _check_packages "$cons_packages_debian_mop_mysql" "$cons_msg_checking_database_req_packages";;
                esac
                ;;
       esac
@@ -401,6 +425,7 @@ function initial_check_data_files ()
             case $var_current_mode in
                  $MODE_WOTLK) n=20000;;
              $MODE_CATACLYSM) n=40000;;
+                   $MODE_MOP) n=47000;;
             esac
             if [ $var_data_files_count -gt $n ]; then
                print_literal_value "$var_data_files_count" "$cons_lit_files"
@@ -416,6 +441,7 @@ function initial_check_data_files ()
    case $var_current_mode in
         $MODE_WOTLK) url="$cons_url_wotlk_data";;
     $MODE_CATACLYSM) url="$cons_url_cataclysm_data";;
+          $MODE_MOP) url="$cons_url_mop_data";;
    esac
 
    # 900 seconds timeout is crazy.
@@ -447,6 +473,26 @@ function initial_check_sql_files ()
 
          # 900 seconds timeout is crazy.
          wget --output-document="$filename" --timeout=30 "$cons_url_cataclysm_sql"
+         result=$?
+         if [ $result -ne 0 ]; then
+            print_fatal_error "$cons_msg_error_download_sql"
+         fi
+         7z x "$filename" -o"$var_dir_sources"
+         result=$?
+         rm "$filename"
+         if [ $result -ne 0 ]; then
+            print_fatal_error "$cons_msg_error_extracting_sql"
+         fi
+      fi
+   fi
+   if [ $var_current_mode == $MODE_MOP ]; then
+      print_full_width "$cons_msg_checking_sql"
+      cd $var_dir_sources
+      if [ ! -f world_548_20231230.sql ]; then
+         local filename=$var_dir_temp/sql.7z
+
+         # 900 seconds timeout is crazy.
+         wget --output-document="$filename" --timeout=30 "$cons_url_mop_sql"
          result=$?
          if [ $result -ne 0 ]; then
             print_fatal_error "$cons_msg_error_download_sql"

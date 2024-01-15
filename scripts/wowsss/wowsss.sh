@@ -4,13 +4,20 @@
 #    \   \/\/  /  _ \  \/\/   /____  \_____  \_____  \ 
 #     \       (  (_) )       /        \       \       \
 #      \__/\  /\____/\__/\  /_______  /_____  /_____  /
-#           \/            \/        \/      \/      \/ 1.0
+#           \/            \/        \/      \/      \/ 1.1
 # ------------------------------------------------------------------------------
 # World of Warcraft Server Script System
-# (C) Copyright by Ivan Llanas, 2023
+# (C) Copyright by Ivan Llanas, 2023-24
 # ------------------------------------------------------------------------------
 # This script performs all the functions related to a "World of Warcraft"
 # private server installation and maintenance on a Ubuntu or Debian system.
+# ------------------------------------------------------------------------------
+# WotLK - AzerothCore
+#    https://github.com/azerothcore/azerothcore-wotlk
+# Cataclysm - TrinityCore
+#    https://github.com/The-Cataclysm-Preservation-Project/TrinityCore
+# MoP - LegendsOfAzeroth
+#    https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
@@ -61,6 +68,7 @@ function main ()
          case $var_current_mode in
               $MODE_WOTLK) text=$name_wotlk_full;;
           $MODE_CATACLYSM) text=$name_cataclysm_full;;
+                $MODE_MOP) text=$name_mop_full;;
          esac
          text="$cons_install '"$text"'"
          read_confirmation "$text"
