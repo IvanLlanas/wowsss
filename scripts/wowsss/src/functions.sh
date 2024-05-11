@@ -68,7 +68,7 @@ function get_base_dir ()
 # ------------------------------------------------------------------------------
 function get_ips ()
 {
-   var_internal_ip=$(hostname -I)
+   var_internal_ip=$(hostname -I | awk '{print $1}')
    var_external_ip=$(dig +short myip.opendns.com @resolver4.opendns.com)
 #  var_external_ip=$(curl -s http://whatismyip.akamai.com/) # This one requires curl package.
    # remove trailing whitespace characters

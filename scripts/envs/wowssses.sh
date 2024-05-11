@@ -16,13 +16,15 @@ confirmed=
 
 # Internal themes
 THEME_IVAN=1
-THEME_VANILLA=2
-THEME_WOTLK=3
-THEME_CATACLYSM=4
+THEME_INAS=2
+THEME_VANILLA=3
+THEME_WOTLK=4
+THEME_CATACLYSM=5
 theme=
 
 # Terminal profiles ID.
 profile_ivan=b1dcc9dd-5262-4d8d-a863-c897e6d979b9
+profile_inas=b1dcc9dd-5262-4d8d-a863-c897e6d979b9
 profile_vanilla=9956a6c5-0a18-47f7-8777-ff097f8254c3
 profile_wotlk=c88a9988-91de-4767-b381-89adef5b6180
 profile_cataclysm=7bb44f24-9657-4f0a-8f68-06995133b4eb
@@ -40,6 +42,7 @@ function choose_theme ()
    echo "Available themes:"
    cr
    echo -e "   $_w$THEME_IVAN - $_b""Ivan"$_0
+   echo -e "   $_w$THEME_INAS - $_l""INAS"$_0
    echo -e "   $_w$THEME_VANILLA - $_y""Vanilla"$_0
    echo -e "   $_w$THEME_WOTLK - $_c""Wrath of the Lich King"$_0
    echo -e "   $_w$THEME_CATACLYSM - $_r""Cataclysm"$_0
@@ -48,6 +51,7 @@ function choose_theme ()
    read theme
    case $theme in
           $THEME_IVAN) echo -e $_b"Ivan$_w theme selected."$_0;;
+          $THEME_INAS) echo -e $_l"INAS$_w theme selected."$_0;;
        $THEME_VANILLA) echo -e $_y"Vanilla$_w theme selected."$_0;;
          $THEME_WOTLK) echo -e $_c"WotLK$_w theme selected."$_0;;
      $THEME_CATACLYSM) echo -e $_r"Cataclysm$_w theme selected."$_0;;
@@ -140,6 +144,7 @@ function terminal_import_profiles ()
       local profile=
       case $theme in
              $THEME_IVAN) profile=$profile_ivan;;
+             $THEME_INAS) profile=$profile_inas;;
           $THEME_VANILLA) profile=$profile_vanilla;;
             $THEME_WOTLK) profile=$profile_wotlk;;
         $THEME_CATACLYSM) profile=$profile_cataclysm;;
@@ -185,6 +190,7 @@ function gui_mode_set_dark ()
    announce "Setting up dark mode..."
    case $theme in
           $THEME_IVAN) _gui_set_themes "Yaru-blue-dark" "Yaru-blue";;
+          $THEME_INAS) _gui_set_themes "Yaru-blue-dark" "Yaru-blue";;
        $THEME_VANILLA) _gui_set_themes "Yaru-dark"      "Yaru";;
          $THEME_WOTLK) _gui_set_themes "Yaru-blue-dark" "Yaru-blue";;
      $THEME_CATACLYSM) _gui_set_themes "Yaru-red-dark"  "Yaru-red";;
@@ -206,6 +212,7 @@ function gui_user_set_icon ()
       local filename=
       case $theme in
              $THEME_IVAN) filename=$(realpath ivan/avatars/avatar-ivan-1.png);;
+             $THEME_INAS) filename=$(realpath ivan/avatars/avatar-ivan-1.png);;
           $THEME_VANILLA) filename=$(realpath $path_icons/vanilla-icon-1.png);;
             $THEME_WOTLK) filename=$(realpath $path_icons/wotlk-icon-1.png);;
         $THEME_CATACLYSM) filename=$(realpath $path_icons/cataclysm-icon-1.png);;
@@ -225,7 +232,8 @@ function gui_desktop_wallpaper_setup ()
    if [ $confirmed ]; then
       local filename=
       case $theme in
-             $THEME_IVAN) filename=$(realpath ivan/wallpapers/traffic-7.jpg);;
+             $THEME_IVAN) filename=$(realpath ivan/wallpapers/city-17-2.jpg);;
+             $THEME_INAS) filename=$(realpath ivan/wallpapers/traffic-7.jpg);;
           $THEME_VANILLA) filename=$(realpath $path_wallpapers/vanilla-1-b.jpg);;
             $THEME_WOTLK) filename=$(realpath $path_wallpapers/wotlk-2-b.jpg);;
         $THEME_CATACLYSM) filename=$(realpath $path_wallpapers/cataclysm-2-b.jpg);;
@@ -277,10 +285,6 @@ function gui_dock_copy_desktop_icons ()
       local icon=
 
       case $theme in
-             $THEME_IVAN) name="WoW Server"
-                          comment="WoW Server Management"
-                          icon=$(realpath $path_icons/vanilla-icon-1.png)
-                          ;;
           $THEME_VANILLA) name="WoW Server"
                           comment="WoW Server Management"
                           icon=$(realpath $path_icons/vanilla-icon-1.png)
@@ -294,20 +298,22 @@ function gui_dock_copy_desktop_icons ()
                           icon=$(realpath $path_icons/cataclysm-icon-1.png)
                           ;;
       esac
-      local filename="data/wowsss.desktop"
-      local script=$(realpath ../wowsss/wowsss.sh)
-      # Replace / with \/
-      name=${name//\//\\\/}
-      comment=${comment//\//\\\/}
-      icon=${icon//\//\\\/}
-      script=${script//\//\\\/}
+      if [ ! "$name" == "" ]; then
+         local filename="data/wowsss.desktop"
+         local script=$(realpath ../wowsss/wowsss.sh)
+         # Replace / with \/
+         name=${name//\//\\\/}
+         comment=${comment//\//\\\/}
+         icon=${icon//\//\\\/}
+         script=${script//\//\\\/}
 
-      sed -i 's/Exec\s\{0,\}=.*/Exec=\/usr\/bin\/bash '"$script"/ $filename
-      sed -i 's/Name\s\{0,\}=.*/Name='"$name"/ $filename
-      sed -i 's/Comment\s\{0,\}=.*/Comment='"$comment"/ $filename
-      sed -i 's/Icon\s\{0,\}=.*/Icon='"$icon"/ $filename
+         sed -i 's/Exec\s\{0,\}=.*/Exec=\/usr\/bin\/bash '"$script"/ $filename
+         sed -i 's/Name\s\{0,\}=.*/Name='"$name"/ $filename
+         sed -i 's/Comment\s\{0,\}=.*/Comment='"$comment"/ $filename
+         sed -i 's/Icon\s\{0,\}=.*/Icon='"$icon"/ $filename
 
-      sudo cp data/*.desktop /usr/share/applications
+         sudo cp data/*.desktop /usr/share/applications
+      fi
    fi
 }
 
@@ -321,6 +327,9 @@ function grub_setup_menu ()
       local distrib=
       case $theme in
              $THEME_IVAN) wp=$(realpath ivan/grub/city-17-2-grub.png)
+                          distrib=
+                          ;;
+             $THEME_INAS) wp=$(realpath ivan/grub/inas-grub.png)
                           distrib=
                           ;;
           $THEME_VANILLA) wp=$(realpath $path_grub/vanilla-1.png)
@@ -361,7 +370,10 @@ function grub_setup_menu ()
       sudo sed -i 's/#GRUB_BACKGROUND\s\{0,\}=.*/GRUB_BACKGROUND=\"'"$wp"'\"/' $filename
       sudo sed -i 's/GRUB_BACKGROUND\s\{0,\}=.*/GRUB_BACKGROUND=\"'"$wp"'\"/' $filename
 
-      sudo sed -i 's/GRUB_DISTRIBUTOR\s\{0,\}=.*/GRUB_DISTRIBUTOR=\"'"$distrib"'\"/' $filename
+      if [ ! "$distrib" == "" ]; then
+         sudo sed -i 's/GRUB_DISTRIBUTOR\s\{0,\}=.*/GRUB_DISTRIBUTOR=\"'"$distrib"'\"/' $filename
+      fi
+
       sudo sed -i 's/GRUB_TIMEOUT_STYLE\s\{0,\}=.*/GRUB_TIMEOUT_STYLE=menu/' $filename
       sudo sed -i 's/GRUB_TIMEOUT\s\{0,\}=.*/GRUB_TIMEOUT=5/' $filename
 
@@ -402,7 +414,9 @@ function login_screen_wallpaper ()
    if [ $confirmed ]; then
       local filename=
       case $theme in
-             $THEME_IVAN) filename=../../ivan/wallpapers/city-17-2.jpg
+             $THEME_IVAN) filename=ivan/wallpapers/city-17-2.jpg
+                          ;;
+             $THEME_INAS) filename=ivan/wallpapers/data-city.jpg
                           ;;
           $THEME_VANILLA) filename=$path_media/boot-ui/wallpapers/vanilla-map.jpg
                           ;;
@@ -431,18 +445,30 @@ function boot_setup_logos ()
    confirm "setup boot logos" "Setting up boot logos..."
    if [ $confirmed ]; then
       local prefix=
+      local path=
       case $theme in
-             $THEME_IVAN) prefix=ivan;;
-          $THEME_VANILLA) prefix=vanilla;;
-            $THEME_WOTLK) prefix=wotlk;;
-        $THEME_CATACLYSM) prefix=cataclysm;;
+             $THEME_IVAN) prefix=ivan
+                          path=ivan
+                          ;;
+             $THEME_INAS) prefix=inas
+                          path=ivan
+                          ;;
+          $THEME_VANILLA) prefix=vanilla
+                          path=$path_media
+                          ;;
+            $THEME_WOTLK) prefix=wotlk
+                          path=$path_media
+                          ;;
+        $THEME_CATACLYSM) prefix=cataclysm
+                          path=$path_media
+                          ;;
       esac
       backup_file "/usr/share/plymouth/themes/spinner/bgrt-fallback.png"
       backup_file "/usr/share/plymouth/themes/spinner/watermark.png"
       backup_file "/usr/share/plymouth/ubuntu-logo.png"
-      sudo cp $path_media/boot-ui/192/$prefix-bgrt-fallback.png     /usr/share/plymouth/themes/spinner/bgrt-fallback.png
-      sudo cp $path_media/boot-ui/$prefix-watermark.png             /usr/share/plymouth/themes/spinner/watermark.png
-      sudo cp $path_media/boot-ui/$prefix-ubuntu-logo.png           /usr/share/plymouth/ubuntu-logo.png
+      sudo cp $path/boot-ui/192/$prefix-bgrt-fallback.png     /usr/share/plymouth/themes/spinner/bgrt-fallback.png
+      sudo cp $path/boot-ui/$prefix-watermark.png             /usr/share/plymouth/themes/spinner/watermark.png
+      sudo cp $path/boot-ui/$prefix-ubuntu-logo.png           /usr/share/plymouth/ubuntu-logo.png
       # sudo nano /usr/share/plymouth/themes/bgrt/bgrt.plymouth
       # set value of ‘UseFirmwareBackground’ to false under [boot-up], [reboot], and [shutdown] sections.
       local filename=/usr/share/plymouth/themes/bgrt/bgrt.plymouth
@@ -460,7 +486,7 @@ function main ()
    cr
    log "---------------------[ WoWSSS environment ]-----------------------"
    log " This script configures some of $_r""my$_0 preferences and configurations"
-   log " for a WoW server on a $_y""GNOME 45.1$_0 desktop."
+   log " for an Ubuntu system with a $_y""GNOME 46+$_0 desktop."
    log " Do not run this unless you are me or you are sure you want these changes."
    log "------------------------------------------------------------------"
    echo -en "Press $_w""ENTER$_0 to continue or $_r""break$_0 to cancel..."
