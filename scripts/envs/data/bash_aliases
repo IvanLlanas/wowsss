@@ -1,3 +1,7 @@
+export LC_ALL="C"
+
+alias fr=fr-normal
+
 # Common aliases
 alias ..="cd .."
 alias ...="cd ../.."
@@ -8,28 +12,35 @@ alias d="ls -l --group-directories-first"
 alias da="ls -la --group-directories-first"
 alias l="less"
 alias q=nano
-alias qq="sudo nano"
+alias sq="sudo nano"
 alias ea="q ~/.bash_aliases"
+alias ra="source ~/.bash_aliases"
+
 alias fm="xdg-open ."
 alias bk="rm *.bak"
+alias 7za="7z a -t7z -mx=9"
 alias sysupdate="sudo apt update && sudo apt upgrade -y"
 alias clearhistory="cat /dev/null > ~/.bash_history && history -c"
-alias fr="echo && free -h && echo &&  df -h / && echo"
 alias bat="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
-alias 7za="7z a -t7z -mx=9"
-alias logout=gnome-session-quit
+alias fr-normal="echo && free -h && echo &&  df / -h && echo"
+alias linkto='function _linktof_(){ ln -s "$(realpath $1)" "$HOME/Desktop/$2"; }; _linktof_'
 
-# Samba
-alias fr="echo && free -h && echo &&  df -h / /shared/videoteca /shared/filter && echo"
+alias kk="conky -c /home/ivan/.config/conky/inas/inas-diskio.conf"
+alias logout=gnome-session-quit
+# Mistakes ------------------------------------------------------
+alias car=cat
+alias cay=cat
+
+# INAS ----------------------------------------------------------
+alias fr-inas="echo && free -h && echo &&  df -h / /shared/videoteca /shared/filter && echo"
 alias smbed="sudo nano /etc/samba/smb.conf"
 alias smbcheck="sudo systemctl status smbd"
 alias smbrestart="sudo service smbd restart"
 
-# Debian
+
+# Debian --------------------------------------------------------
 # alias shutdown="sudo systemctl poweroff"
 # alias reboot="sudo systemctl reboot"
 
-# WoW servers
+# WoW servers ---------------------------------------------------
 alias wow="~/wowsss/scripts/wowsss/wowsss.sh"
-
-export LC_ALL="C"
