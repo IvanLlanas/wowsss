@@ -64,9 +64,9 @@ MOP_DB_CHARACTERS_PORT=$DB_SERVER_PORT
 # Let's use all the cores... NO! Don't do this!
 # CPU_CORES=$(nproc --all)
 # Let's use half the cores... We could user some more...
-# CPU_CORES=$(expr $(nproc --all) / 2)
+# CPU_CORES=$(expr $(nproc) / 2)
 # Let's not strangle the system, leave a couple of cores for it...
-CPU_CORES=$(expr $(nproc --all) - 2)
+CPU_CORES=$(expr $(nproc) - 2)
 
 # Should backup files be copied elsewhere? After making a backup, which will be 
 # placed in "backup" directory, if REMOTE_BACKUPS is non-zero the backup will be
