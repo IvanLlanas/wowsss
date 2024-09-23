@@ -24,6 +24,7 @@ alias clearhistory="cat /dev/null > ~/.bash_history && history -c"
 alias bat="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
 alias fr-normal="echo && free -h && echo &&  df / -h && echo"
 alias linkto='function _linktof_(){ ln -s "$(realpath $1)" "$HOME/Desktop/$2"; }; _linktof_'
+alias fstab="sudo nano /etc/fstab"
 
 alias kk="conky -c /home/ivan/.config/conky/inas/inas-diskio.conf"
 alias logout=gnome-session-quit
