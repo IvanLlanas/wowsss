@@ -10,7 +10,7 @@
 
 # ------------------------------------------------------------------------------
 # function update_pidof_servers ()
-# Updates the PID of the MariaDB/MySQL daemon process in "$var_pidof_db".
+# Updates the PID of the MySQL daemon process in "$var_pidof_db".
 # ------------------------------------------------------------------------------
 function update_pidof_servers ()
 {

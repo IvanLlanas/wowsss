@@ -4,7 +4,7 @@
 #    \   \/\/  /  _ \  \/\/   /____  \_____  \_____  \ 
 #     \       (  (_) )       /        \       \       \
 #      \__/\  /\____/\__/\  /_______  /_____  /_____  /
-#           \/            \/        \/      \/      \/ 1.1
+#           \/            \/        \/      \/      \/ 1.2
 # ------------------------------------------------------------------------------
 # World of Warcraft Server Script System
 # (C) Copyright by Ivan Llanas, 2023-24
@@ -63,7 +63,7 @@ function main ()
       if (( $var_available_modes == 0 )) || (( $var_available_modes == 1  &&  $var_force_switch_mode > 0 )); then
          local text=
          # Show details...
-         show_wosss_info
+         show_wowsss_info
          # ...and ask for confirmation.
          case $var_current_mode in
               $MODE_WOTLK) text=$name_wotlk_full;;
@@ -87,11 +87,13 @@ function main ()
       initial_check_databases
 
       # Get som final info
-      get_ips # We'll only get the IP's for menu mode and only once.
+      get_ips # We'll only get the IP's for menu mode and only once. Well, show_wowsss_info may call it too.
       get_sources_hash
       sources_check_update_available
 
       var_force_switch_mode=0
+
+      play_sound_ready
       wowsss_main_menu
 
    [[ $var_force_switch_mode -gt 0 ]] || break

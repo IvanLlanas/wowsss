@@ -18,25 +18,6 @@ function _mysql_secure_installation ()
    print_warning_message "$cons_msg_mysqladmin_user_password"
 
    case $var_current_dbengine in
-    $DBENGINE_MARIADB)
-         print_info_message "$cons_lit_configuring <b>$name_mariadb_full</b>..."
-         sudo mysqladmin -u $var_db_user password "$var_db_pass"
-         result=$?
-         if [ $result -ne 0 ]; then
-            print_fatal_error "Error @ mysqladmin 1"
-         fi
-         sudo mysqladmin -u $var_db_user -h localhost password "$var_db_pass"
-         result=$?
-         if [ $result -ne 0 ]; then
-            print_fatal_error "Error @ mysqladmin 2"
-         fi
-         print_warning_message "ALTER USER (<b>$var_db_user</b>@localhost)..."
-         mysql -u $var_db_user -p$var_db_pass -e "ALTER USER '$var_db_user'@'localhost' IDENTIFIED BY '$var_db_pass'; FLUSH PRIVILEGES"
-         result=$?
-         if [ $result -ne 0 ]; then
-            print_fatal_error "Error @ ALTER-USER"
-         fi
-         ;;
     $DBENGINE_MYSQL)
          print_info_message "$cons_lit_configuring <b>$name_mysql_full</b>..."
          print_warning_message "ALTER USER (<b>$var_db_user</b>@localhost)..."
@@ -131,14 +112,7 @@ function database_check_enable_admin_access ()
       print_warning_message "$cons_msg_db_setup_0_message"
 
       case $var_current_dbengine in
-       $DBENGINE_MARIADB)
-         print_text "$cons_msg_tips_setup_db_server_0"
-         print_text "$cons_msg_tips_setup_db_server_0_mariadb_1"
-         print_text "$cons_msg_tips_setup_db_server_0_mariadb_2"
-         print_text "$cons_msg_tips_setup_db_server_0_mariadb_3"
-         ;;
        $DBENGINE_MYSQL)
-         print_text "MYSQL SPECIFIC INSTRUCTIONS!"
          print_text "$cons_msg_tips_setup_db_server_0"
          print_text "$cons_msg_tips_setup_db_server_0_mysql_1"
          print_text "$cons_msg_tips_setup_db_server_0_mysql_2"

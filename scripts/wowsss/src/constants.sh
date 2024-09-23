@@ -10,8 +10,8 @@ function define_constants_1 ()
 {
    cons_lit_product_name_short="WoWSSS"
    cons_lit_product_name_long="World of Warcraft Server Script System"
-   cons_lit_product_version="1.1"
-   cons_lit_product_date="2024-01-14"
+   cons_lit_product_version="1.2"
+   cons_lit_product_date="2024-09-25"
 
    # ANSI codes - Uncomment those being used.
    # ----------
@@ -75,8 +75,7 @@ function define_constants_1 ()
 
    # Database engines
    DBENGINE_NONE=0
-   DBENGINE_MARIADB=1
-   DBENGINE_MYSQL=2
+   DBENGINE_MYSQL=1
 
    cons_wotlk_db_auth_name=$WOTLK_DB_AUTH_NAME
    cons_wotlk_db_world_name=$WOTLK_DB_WORLD_NAME
@@ -121,7 +120,6 @@ function define_constants_1 ()
    cons_lit_starting="Starting"
    cons_lit_initializing_="Initializing "
 
-   name_mariadb_full="MariaDB"
    name_mysql_full="MySQL"
    name_wotlk_full="Wrath of the Lich King (AzerothCore)"
    name_cataclysm_full="Cataclysm (TrinityCore)"
@@ -165,11 +163,6 @@ function define_constants_1 ()
    cons_option_mode_cataclysm="${indent_op}2 - $name_cataclysm_full"
    cons_option_mode_mop="${indent_op}3 - $name_mop_full"
    cons_mode_selection_2="${indent_sh}Select option (1-3): "
-
-   cons_dbengine_selection_1="${indent_sh}Select the database engine you desire:"
-   cons_option_mode_mariadb="${indent_op}1 - $name_mariadb_full"
-   cons_option_mode_mysql="${indent_op}2 - $name_mysql_full"
-   cons_dbengine_selection_2="${indent_sh}Select option (1-2): "
 
    cons_lit_info_host_os="                 Host OS"
    cons_lit_info_user="                    User"
@@ -315,28 +308,13 @@ function define_constants_1 ()
    cons_packages_wowsss="git p7zip-full unzip gcp screen wget sox"
 
    cons_packages_ubuntu_wotlk="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev"
-   cons_packages_debian_wotlk=$cons_packages_ubuntu_wotlk
-   cons_packages_ubuntu_wotlk_mariadb="mariadb-server mariadb-client libmariadb-dev libmariadb-dev-compat"
-   cons_packages_debian_wotlk_mariadb="mariadb-server default-libmysqlclient-dev"
    cons_packages_ubuntu_wotlk_mysql="mysql-server libmysqlclient-dev"
-   # Debian will only support MariaDB server for the time being.
-   cons_packages_debian_wotlk_mysql=$cons_packages_debian_wotlk_mariadb
 
    cons_packages_ubuntu_cataclysm="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev"
-   cons_packages_debian_cataclysm=$cons_packages_ubuntu_cataclysm
-   cons_packages_ubuntu_cataclysm_mariadb="mariadb-server libmariadb-dev libmariadb-dev-compat"
-   cons_packages_debian_cataclysm_mariadb=$cons_packages_debian_wotlk_mariadb
    cons_packages_ubuntu_cataclysm_mysql=$cons_packages_ubuntu_wotlk_mysql
-   # Debian will only support MariaDB server for the time being.
-   cons_packages_debian_cataclysm_mysql=$cons_packages_debian_wotlk_mysql
 
    cons_packages_ubuntu_mop="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev libace-dev"
-   cons_packages_debian_mop=$cons_packages_ubuntu_wotlk
-   cons_packages_ubuntu_mop_mariadb="mariadb-server mariadb-client libmariadb-dev libmariadb-dev-compat"
-   cons_packages_debian_mop_mariadb="mariadb-server default-libmysqlclient-dev"
    cons_packages_ubuntu_mop_mysql=$cons_packages_ubuntu_wotlk_mysql
-   # Debian will only support MariaDB server for the time being.
-   cons_packages_debian_mop_mysql=$cons_packages_debian_wotlk_mariadb
 
    # Application to play a sound file (ogg) and its command line parameters.
    cons_playsound="play -q"
@@ -367,9 +345,6 @@ function define_constants_2 ()
 
    cons_msg_db_setup_0_message="In case this is a fresh installation or your database server is not configured yet I can do this for you (not recommended) or you can do it by yourself (recommended)."
    cons_msg_tips_setup_db_server_0="To configure your server with the values in your <b>$var_dir_wowsss_script/settings.sh</b> file you can do:"
-   cons_msg_tips_setup_db_server_0_mariadb_1="${indent_op}$ sudo mysql_secure_installation"
-   cons_msg_tips_setup_db_server_0_mariadb_2="${indent_op}$ sudo mysqladmin -u <b>$var_db_user</b> password <b>$var_db_pass</b>"
-   cons_msg_tips_setup_db_server_0_mariadb_3="${indent_op}$ sudo mysqladmin -u <b>$var_db_user</b> -h localhost password <b>$var_db_pass</b>"
    cons_msg_tips_setup_db_server_0_mysql_1="${indent_op}$ sudo mysql_secure_installation"
    cons_msg_tips_setup_db_server_0_mysql_2="${indent_op}$ sudo mysql"
    cons_msg_tips_setup_db_server_0_mysql_3="${indent_op}mysql> ALTER USER '$var_db_user'@'localhost' IDENTIFIED WITH caching_sha2_password BY '$var_db_pass'; FLUSH PRIVILEGES;"

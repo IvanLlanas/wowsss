@@ -132,6 +132,7 @@ function terminal_startup_configuration_files ()
    if [ $confirmed ]; then
       cp data/bashrc ~/.bashrc
       cp data/bash_aliases ~/.bash_aliases
+      cp data/nanorc ~/.nanorc
    fi
 }
 
@@ -347,8 +348,6 @@ function grub_setup_menu ()
 # GRUB_DEFAULT=0
 # GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
 # GRUB_CMDLINE_LINUX=""
-
-
 # GRUB_BACKGROUND="wp"
 # GRUB_DISTRIBUTOR="WoW – WotLK"
 # GRUB_TIMEOUT_STYLE=menu
@@ -377,9 +376,8 @@ function grub_setup_menu ()
       sudo sed -i 's/GRUB_TIMEOUT_STYLE\s\{0,\}=.*/GRUB_TIMEOUT_STYLE=menu/' $filename
       sudo sed -i 's/GRUB_TIMEOUT\s\{0,\}=.*/GRUB_TIMEOUT=5/' $filename
 
-      # We will not change this, by now.
-      # sudo sed -i 's/#GRUB_GFXMODE\s\{0,\}=.*/GRUB_GFXMODE=640x480/' $filename
-      # sudo sed -i 's/GRUB_GFXMODE\s\{0,\}=.*/GRUB_GFXMODE=640x480/' $filename
+      sudo sed -i 's/#GRUB_GFXMODE\s\{0,\}=.*/GRUB_GFXMODE=640x480/' $filename
+      sudo sed -i 's/GRUB_GFXMODE\s\{0,\}=.*/GRUB_GFXMODE=640x480/' $filename
 
 # Colors: red, green, blue, cyan, magenta, brown, light-gray, black
 # Foreground has additional colors available:

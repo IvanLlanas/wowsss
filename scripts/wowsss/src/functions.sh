@@ -16,9 +16,13 @@
 # function print_menu_title ($title)
 # function read_answer (literal)
 # function read_confirmation (action)
-# function show_wosss_info ()
+# function show_wowsss_info ()
 # function wait (seconds)
 # function play_sound ($filename_without_path)
+# function play_sound_work_complete ()
+# function play_sound_error ()
+# function play_sound_fatal_error ()
+# function play_sound_ready ()
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
@@ -394,17 +398,21 @@ function print_menu_title ()
 }
 
 # ------------------------------------------------------------------------------
-# function show_wosss_info ()
+# function show_wowsss_info ()
 # Shows a lot of server information
 # ------------------------------------------------------------------------------
-function show_wosss_info ()
+function show_wowsss_info ()
 {
    local from_menu=$1
    
    if [ $from_menu ]; then
       print_full_width "$cons_lit_server_information"
+   else
+     if [[ $var_internal_ip == "" ]]; then
+        get_ips
+     fi
    fi
-   
+ 
    # Host OS
    print_literal_value "$var_os_hostname - $var_os_distribution" "$cons_lit_info_host_os"
    print_literal_value "$var_os_username$_ansi_off/$var_os_userid ($HOME)" "$cons_lit_info_user"
@@ -433,9 +441,6 @@ function show_wosss_info ()
 
    # Database engine
    case $var_current_dbengine in
-    $DBENGINE_MARIADB)
-         print_literal_value "$_c_bold2$name_mariadb_full" "$cons_lit_info_dbengine"
-         ;;
     $DBENGINE_MYSQL)
          print_literal_value "$_c_bold2$name_mysql_full" "$cons_lit_info_dbengine"
          ;;
@@ -488,3 +493,24 @@ function play_sound ()
    local filename=$1
    $cons_playsound "$var_dir_sounds/$filename" &> /dev/null
 }
+
+function play_sound_work_complete ()
+{
+   play_sound "work-complete.ogg"
+}
+
+function play_sound_error ()
+{
+   play_sound "thats-not-funny.ogg"
+}
+
+function play_sound_fatal_error ()
+{
+   play_sound "are-you-challenging-me.ogg"
+}
+
+function play_sound_ready ()
+{
+   play_sound "lok-tar.ogg"
+}
+

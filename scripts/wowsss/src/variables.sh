@@ -19,7 +19,7 @@ function define_variables_1 ()
       var_os_distribution="$var_os_name $var_os_version ($var_os_codename)"
       case $var_os_name in
         *"Ubuntu"*) var_os_is_ubuntu=1;;
-        *"Debian"*) var_os_is_debian=1;;
+#       *"Debian"*) var_os_is_debian=1;;
         *) show_fatal_error "$cons_msg_unknown_linux_version";;
       esac
    else
@@ -116,10 +116,10 @@ function define_variables_1 ()
    # Is there any servers sources update?
    var_sources_update_available=
 
-   # MariaDB/MySQL user and password for script management.
+   # MySQL user and password for script management.
    var_db_user=$DB_SCRIPT_USER
    var_db_pass=$DB_SCRIPT_USER_PASSWORD
-   # MariaDB/MySQL user and password for AC/TC servers access.
+   # MySQL user and password for AC/TC servers access.
    var_db_servers_user=$DB_SERVERS_USER
    var_db_servers_pass=$DB_SERVERS_USER_PASSWORD
 

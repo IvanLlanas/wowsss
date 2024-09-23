@@ -214,68 +214,15 @@ function is_package_installed ()
 }
 
 # ------------------------------------------------------------------------------
-# function select_dbengine ()
-# Asks the user which database engine be installed.
-# ------------------------------------------------------------------------------
-function select_dbengine ()
-{
-   print_text "$cons_dbengine_selection_1"
-   CR
-   print_text "$cons_option_mode_mariadb"
-   print_text "$cons_option_mode_mysql"
-   CR
-   read_answer "$cons_dbengine_selection_2"
-   case $var_answer in
-    "1") var_current_dbengine=$DBENGINE_MARIADB
-         ;;
-    "2") var_current_dbengine=$DBENGINE_MYSQL
-         ;;
-   esac
-}
-
-# ------------------------------------------------------------------------------
 # function detect_or_select_dbengine ()
 # Tries do detect the installed database engine. If no databse engine is
 # detected then asks the user which is the one to install/use.
 # ------------------------------------------------------------------------------
 function detect_or_select_dbengine ()
 {
-   local installed=$(is_package_installed "mariadb-server")
-
-   var_current_dbengine=$DBENGINE_NONE
-   if [[ $installed -gt 0 ]]; then
-      var_current_dbengine=$DBENGINE_MARIADB
-   else
-      installed=$(is_package_installed "mysql-server")
-      if [ $installed -gt 0 ]; then
-         var_current_dbengine=$DBENGINE_MYSQL
-      fi
-   fi
-
-   if [[ $var_current_dbengine = $DBENGINE_NONE ]]; then
-      select_dbengine
-      if [[ $var_current_dbengine = $DBENGINE_NONE ]]; then
-         print_error_message "$cons_error_undefined_dbengine_q"
-         exit
-      fi
-   fi
-
-   # Database engine
-   # At this point we already know the database engine we want to use:
-   case $var_current_dbengine in
-    $DBENGINE_MARIADB)
-         print_info_message "$cons_lit_initializing_<b>$name_mariadb_full</b>..."
-         var_db_process_name="mariadbd"
-         ;;
-    $DBENGINE_MYSQL)
-         print_info_message "$cons_lit_initializing_<b>$name_mysql_full</b>..."
-         var_db_process_name="mysql"
-         ;;
-    *)
-         print_error_message "$cons_error_undefined_dbengine_q"
-         exit
-         ;;
-   esac
+   var_current_dbengine=$DBENGINE_MYSQL
+   print_info_message "$cons_lit_initializing_<b>$name_mysql_full</b>..."
+   var_db_process_name="mysql"
 }
 
 # ------------------------------------------------------------------------------
@@ -329,47 +276,19 @@ function initial_check_required_packages ()
            $MODE_WOTLK)
                _check_packages "$cons_packages_ubuntu_wotlk" "$cons_msg_checking_server_req_packages"
                case $var_current_dbengine in
-                $DBENGINE_MARIADB) _check_packages "$cons_packages_ubuntu_wotlk_mariadb" "$cons_msg_checking_database_req_packages";;
                   $DBENGINE_MYSQL) _check_packages "$cons_packages_ubuntu_wotlk_mysql" "$cons_msg_checking_database_req_packages";;
                esac
                ;;
        $MODE_CATACLYSM)
                _check_packages "$cons_packages_ubuntu_cataclysm" "$cons_msg_checking_server_req_packages"
                case $var_current_dbengine in
-                $DBENGINE_MARIADB) _check_packages "$cons_packages_ubuntu_cataclysm_mariadb" "$cons_msg_checking_database_req_packages";;
                   $DBENGINE_MYSQL) _check_packages "$cons_packages_ubuntu_cataclysm_mysql" "$cons_msg_checking_database_req_packages";;
                esac
                ;;
              $MODE_MOP)
                _check_packages "$cons_packages_ubuntu_mop" "$cons_msg_checking_server_req_packages"
                case $var_current_dbengine in
-                $DBENGINE_MARIADB) _check_packages "$cons_packages_ubuntu_mop_mariadb" "$cons_msg_checking_database_req_packages";;
                   $DBENGINE_MYSQL) _check_packages "$cons_packages_ubuntu_mop_mysql" "$cons_msg_checking_database_req_packages";;
-               esac
-               ;;
-      esac
-   else
-      # Debian
-      case $var_current_mode in
-           $MODE_WOTLK)
-               _check_packages "$cons_packages_debian_wotlk" "$cons_msg_checking_server_req_packages"
-               case $var_current_dbengine in
-                $DBENGINE_MARIADB) _check_packages "$cons_packages_debian_wotlk_mariadb" "$cons_msg_checking_database_req_packages";;
-                  $DBENGINE_MYSQL) _check_packages "$cons_packages_debian_wotlk_mysql" "$cons_msg_checking_database_req_packages";;
-               esac
-               ;;
-       $MODE_CATACLYSM)
-               _check_packages "$cons_packages_ubuntu_cataclysm" "$cons_msg_checking_server_req_packages"
-               case $var_current_dbengine in
-                $DBENGINE_MARIADB) _check_packages "$cons_packages_debian_cataclysm_mariadb" "$cons_msg_checking_database_req_packages";;
-                  $DBENGINE_MYSQL) _check_packages "$cons_packages_debian_cataclysm_mysql" "$cons_msg_checking_database_req_packages";;
-               esac
-               ;;
-             $MODE_MOP)
-               _check_packages "$cons_packages_debian_mop" "$cons_msg_checking_server_req_packages"
-               case $var_current_dbengine in
-                $DBENGINE_MARIADB) _check_packages "$cons_packages_debian_mop_mariadb" "$cons_msg_checking_database_req_packages";;
-                  $DBENGINE_MYSQL) _check_packages "$cons_packages_debian_mop_mysql" "$cons_msg_checking_database_req_packages";;
                esac
                ;;
       esac

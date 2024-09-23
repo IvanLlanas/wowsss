@@ -103,6 +103,7 @@ function servers_sources_download ()
    result=$?
    if [ $result -ne 0 ] ; then
       if [ $quit_on_error > 0 ]; then
+         play_sound_fatal_error
          print_fatal_error "$cons_msg_error_dwnd_sources"
       else
          print_error_message "$cons_msg_error_dwnd_sources"
@@ -117,6 +118,7 @@ function servers_sources_download ()
       git clone https://github.com/azerothcore/mod-transmog.git
       result=$?
       if [ $result -ne 0 ] ; then
+         play_sound_fatal_error
          if [ $quit_on_error -gt 0 ]; then
             print_fatal_error "$cons_msg_error_dwnd_mods"
          else
@@ -145,6 +147,7 @@ function servers_sources_download ()
    esac
    result=$?
    if [ $result -ne 0 ] ; then
+      play_sound_fatal_error
       if [ $quit_on_error -gt 0 ]; then
          print_fatal_error "$cons_msg_error_creating_make_files"
       else
@@ -216,8 +219,10 @@ function servers_sources_compile_and_install ()
       print_info_message "$cons_msg_make_install"
       cd $var_dir_sources/build
       make install
+      play_sound_work_complete
    else
       echo "   "---"(error)" $(date -ud "@$_elapsed" +'%Hh %Mm %Ss') "($var_compiler_cores $cons_lit_cores)" >> "$filename"
+      play_sound_error
    fi
    servers_setup_default_config_files
 

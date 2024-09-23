@@ -1,4 +1,4 @@
-export LC_ALL="C"
+#export LC_ALL="C" # Breaks unicode characters!
 
 alias fr=fr-normal
 
@@ -37,10 +37,25 @@ alias smbed="sudo nano /etc/samba/smb.conf"
 alias smbcheck="sudo systemctl status smbd"
 alias smbrestart="sudo service smbd restart"
 
-
 # Debian --------------------------------------------------------
 # alias shutdown="sudo systemctl poweroff"
 # alias reboot="sudo systemctl reboot"
 
 # WoW servers ---------------------------------------------------
 alias wow="~/wowsss/scripts/wowsss/wowsss.sh"
+
+# Big aliases ---------------------------------------------------
+function findtext ()
+{
+   if [ $# -lt 1 ]; then
+      echo "Usage: findtext text [path]"
+   else
+      local text=$1
+      local path=$2
+      if [ $# -lt 2 ]; then
+         path="."
+      fi
+      grep -rni "$text" "$path"
+   fi
+}
+
