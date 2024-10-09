@@ -491,7 +491,9 @@ function show_wowsss_info ()
 function play_sound ()
 {
    local filename=$1
-   $cons_playsound "$var_dir_sounds/$filename" &> /dev/null
+   if [[ $PLAY_SOUNDS -gt 0 ]]; then
+      $cons_playsound "$var_dir_sounds/$filename" &> /dev/null
+   fi
 }
 
 function play_sound_work_complete ()

@@ -73,7 +73,7 @@ function wowsss_main_menu ()
       CR
       read_answer "$cons_msg_choose_an_option"
       case $var_answer in
-       "0")    show_wosss_info 1;;
+       "0")    show_wowsss_info 1;;
        "1")    main_menu_servers_start;;
        "2")    main_menu_servers_stop;;
        "3")    main_menu_top;;

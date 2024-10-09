@@ -9,6 +9,18 @@
 # function _database_check_table_exists (db, tablename)
 # ------------------------------------------------------------------------------
 
+
+# ------------------------------------------------------------------------------
+# Tries to configure the initial database access.
+# https://gist.github.com/alexwebgr/e438dcbb1eba91af8131736cfbfe9b80
+# ------------------------------------------------------------------------------
+function _mysql_create_temp_file ()
+{
+   echo "[client]"                  >  "$var_db_client_file"
+   echo "user=\"$var_db_user\""     >> "$var_db_client_file"
+   echo "password=\"$var_db_pass\"" >> "$var_db_client_file"
+}
+
 # ------------------------------------------------------------------------------
 # Tries to configure the initial database access.
 # https://gist.github.com/alexwebgr/e438dcbb1eba91af8131736cfbfe9b80
@@ -51,12 +63,11 @@ function _mysql_secure_installation ()
 function _database_check_create ()
 {
    local db=$1
-   local uparams="--user=$var_db_user --password=$var_db_pass"
+   local uparams="--defaults-extra-file=$var_db_client_file"
    local query="USE $db"
 
    print_info_message "$cons_lit_checking_database <b>$db</b>..."
-
-   mysql $uparams -e "$query" &> /dev/null
+   mysql $uparams -e "$query" #&> /dev/null
    result=$?
    if [ $result -ne 0 ]; then
       print_warning_message "$cons_lit_creating_database <b>$db</b>..."
@@ -164,7 +175,8 @@ function database_check_create_servers_access ()
                       GRANT ALL PRIVILEGES ON \`$var_db_world_name\`.* TO '$var_db_servers_user'@'$host' WITH GRANT OPTION;\
                       GRANT ALL PRIVILEGES ON \`$var_db_chars_name\`.* TO '$var_db_servers_user'@'$host' WITH GRANT OPTION;\
                       GRANT ALL PRIVILEGES ON \`$var_db_auth_name\`.*  TO '$var_db_servers_user'@'$host' WITH GRANT OPTION;"
-      mysql -e "$queries" --user=$var_db_user --password=$var_db_pass
+      local uparams="--defaults-extra-file=$var_db_client_file"
+      mysql $uparams -e "$queries"
       result=$?
       if [ $result -ne 0 ]
       then
@@ -189,6 +201,7 @@ function initial_check_databases ()
    database_check_enable_admin_access
    database_check_create_servers_access
    databases_check_create
+   _mysql_create_temp_file
 }
 
 # ------------------------------------------------------------------------------
@@ -201,6 +214,7 @@ function database_import_from_script ()
    local script=$2
    print_info_message "Importing \"<b>$db</b>\" database:"
    if test -f "$script"; then
+      # We're not using the temporary credentials filename, we want to be prompted for the password.
       mysql -u $var_db_user -p $db < "$script"
    else
       print_error_message "File <b>$script</b> not found. Database <b>$db</b> bypassed."
@@ -237,8 +251,8 @@ function database_setup_realm ()
 {
    local ext_ip=$1
    local int_ip=$2
-
-   mysql -u $var_db_user -p$var_db_pass -e \
+   local uparams="--defaults-extra-file=$var_db_client_file"
+   mysql $uparams -e \
    "USE $var_db_auth_name; UPDATE realmlist SET address='$ext_ip', localAddress='$int_ip'"
 }
 
@@ -247,7 +261,8 @@ function database_setup_realm ()
 # ------------------------------------------------------------------------------
 function _get_realm_count ()
 {
-   local result=`mysql -u $var_db_user -p$var_db_pass -e "USE $var_db_auth_name; SELECT COUNT(*) FROM realmlist;" | grep -v "COUNT"`
+   local uparams="--defaults-extra-file=$var_db_client_file"
+   local result=`mysql $uparams -e "USE $var_db_auth_name; SELECT COUNT(*) FROM realmlist;" | grep -v "COUNT"`
    local result2=$?
    if [ $result2 -ne 0 ]; then
       echo 0
@@ -261,7 +276,8 @@ function _get_realm_count ()
 # ------------------------------------------------------------------------------
 function _get_realm_name ()
 {
-   local result=`mysql -u $var_db_user -p$var_db_pass -N -s -e "USE $var_db_auth_name; SELECT name FROM realmlist;"`
+   local uparams="--defaults-extra-file=$var_db_client_file"
+   local result=`mysql $uparams -N -s -e "USE $var_db_auth_name; SELECT name FROM realmlist;"`
    local result2=$?
    if [ $result2 -ne 0 ]; then
       echo "[ERROR]"
@@ -276,7 +292,8 @@ function _get_realm_name ()
 # ------------------------------------------------------------------------------
 function _get_realm_ip1 ()
 {
-   local result=`mysql -u $var_db_user -p$var_db_pass -N -s -e "USE $var_db_auth_name; SELECT address FROM realmlist;"`
+   local uparams="--defaults-extra-file=$var_db_client_file"
+   local result=`mysql $uparams -N -s -e "USE $var_db_auth_name; SELECT address FROM realmlist;"`
    local result2=$?
    if [ $result2 -ne 0 ]; then
       echo "[ERROR]"
@@ -291,7 +308,8 @@ function _get_realm_ip1 ()
 # ------------------------------------------------------------------------------
 function _get_realm_ip2 ()
 {
-   local result=`mysql -u $var_db_user -p$var_db_pass -N -s -e "USE $var_db_auth_name; SELECT localAddress FROM realmlist;"`
+   local uparams="--defaults-extra-file=$var_db_client_file"
+   local result=`mysql $uparams -N -s -e "USE $var_db_auth_name; SELECT localAddress FROM realmlist;"`
    local result2=$?
    if [ $result2 -ne 0 ]; then
       echo "[ERROR]"
@@ -310,8 +328,9 @@ function _database_check_table_exists ()
    local table=$2
    local script=$3
    local SQL_EXISTS='USE '$db'; SHOW TABLES LIKE "'$table'"'
+   local uparams="--defaults-extra-file=$var_db_client_file"
 
-   local result=$(mysql -u $var_db_user -p$var_db_pass -e "$SQL_EXISTS" $DATABASE)
+   local result=$(mysql $uparams -e "$SQL_EXISTS" $DATABASE)
    local result2=$?
 
    if [ $result2 -ne 0 ]; then
@@ -322,7 +341,7 @@ function _database_check_table_exists ()
 #     # Table exists
 #     local SQL_IS_EMPTY='USE '$db'; SELECT 1 FROM '$table' LIMIT 1'
 #     # Check if table has records
-#     if [[ $(mysql -u $var_db_user -p$var_db_pass -e "$SQL_IS_EMPTY" $DATABASE) ]]
+#     if [[ $(mysql $uparams -e "$SQL_IS_EMPTY" $DATABASE) ]]
 #     then
 #        # Table has records
 #     else
@@ -331,7 +350,7 @@ function _database_check_table_exists ()
    else
       # Table does not exists
       print_info_message "$cons_lit_database_populating <b>$db</b>."
-      mysql -u $var_db_user -p$var_db_pass $db < $script
+      mysql $uparams $db < $script
       result2=$?
       if [ $result2 -ne 0 ]; then
          print_fatal_error "$cons_lit_cannot_populate_db <b>$db</b>."

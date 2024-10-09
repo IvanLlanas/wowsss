@@ -119,6 +119,8 @@ function define_variables_1 ()
    # MySQL user and password for script management.
    var_db_user=$DB_SCRIPT_USER
    var_db_pass=$DB_SCRIPT_USER_PASSWORD
+   var_db_client_file="$var_dir_temp/wowsss-db-client.conf"
+
    # MySQL user and password for AC/TC servers access.
    var_db_servers_user=$DB_SERVERS_USER
    var_db_servers_pass=$DB_SERVERS_USER_PASSWORD

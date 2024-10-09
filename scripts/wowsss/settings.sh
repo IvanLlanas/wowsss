@@ -7,6 +7,9 @@
 # Common settings --------------------------------------------------------------
 # ------------------------------------------------------------------------------
 
+# Allow WoWSSS play some sounds on errors and "works completed".
+PLAY_SOUNDS=1
+
 # Database server user and password to be used by WoWSSS for the database
 # management. It can be root.
 DB_SCRIPT_USER=root
