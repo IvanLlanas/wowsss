@@ -67,7 +67,7 @@ function _database_check_create ()
    local query="USE $db"
 
    print_info_message "$cons_lit_checking_database <b>$db</b>..."
-   mysql $uparams -e "$query" #&> /dev/null
+   mysql $uparams -e "$query" &> /dev/null
    result=$?
    if [ $result -ne 0 ]; then
       print_warning_message "$cons_lit_creating_database <b>$db</b>..."
