@@ -9,10 +9,9 @@
 # function _database_check_table_exists (db, tablename)
 # ------------------------------------------------------------------------------
 
-
 # ------------------------------------------------------------------------------
-# Tries to configure the initial database access.
-# https://gist.github.com/alexwebgr/e438dcbb1eba91af8131736cfbfe9b80
+# Creates a temporary MySQL configuration file to specify the login credentials
+# and avoid using the unsafe (and its ugly warning message) --password parameter.
 # ------------------------------------------------------------------------------
 function _mysql_create_temp_file ()
 {
@@ -198,10 +197,10 @@ function database_check_create_servers_access ()
 function initial_check_databases ()
 {
    print_full_width "$cons_msg_checking_databases"
+   _mysql_create_temp_file
    database_check_enable_admin_access
    database_check_create_servers_access
    databases_check_create
-   _mysql_create_temp_file
 }
 
 # ------------------------------------------------------------------------------
