@@ -270,29 +270,51 @@ function initial_check_required_packages ()
 {
    _check_packages "$cons_packages_wowsss" "$cons_msg_checking_wowsss_req_packages"
 
-   if [ -n "$var_os_is_ubuntu" ]; then
-      # Ubuntu
-      case $var_current_mode in
-           $MODE_WOTLK)
-               _check_packages "$cons_packages_ubuntu_wotlk" "$cons_msg_checking_server_req_packages"
-               case $var_current_dbengine in
-                  $DBENGINE_MYSQL) _check_packages "$cons_packages_ubuntu_wotlk_mysql" "$cons_msg_checking_database_req_packages";;
-               esac
-               ;;
-       $MODE_CATACLYSM)
-               _check_packages "$cons_packages_ubuntu_cataclysm" "$cons_msg_checking_server_req_packages"
-               case $var_current_dbengine in
-                  $DBENGINE_MYSQL) _check_packages "$cons_packages_ubuntu_cataclysm_mysql" "$cons_msg_checking_database_req_packages";;
-               esac
-               ;;
-             $MODE_MOP)
-               _check_packages "$cons_packages_ubuntu_mop" "$cons_msg_checking_server_req_packages"
-               case $var_current_dbengine in
-                  $DBENGINE_MYSQL) _check_packages "$cons_packages_ubuntu_mop_mysql" "$cons_msg_checking_database_req_packages";;
-               esac
-               ;;
-      esac
+   if [ -n "$var_os_is_debian" ]; then
+      # Debian (12) does not include mysql-server in its repositories and it must be installed
+      # manually.
+      local installed=$(is_package_installed "mysql-server")
+      if [ $installed = 0 ]; then
+         print_warning_message ""
+         print_warning_message "<b>mysql-server</b> is not installed in this system. You must install it manually before continuing."
+         print_warning_message "Manual procedure documented in: <b>https://docs.vultr.com/how-to-install-mysql-on-debian-12</b>"
+         print_warning_message ""
+         print_warning_message "1. Download the latest MySQL repository information package."
+         print_warning_message "   $ <b>wget https://dev.mysql.com/get/mysql-apt-config_0.8.30-1_all.deb</b>"
+         print_warning_message ""
+         print_warning_message "2. Install the MySQL repository information using the file."
+         print_warning_message "   $ <b>sudo dpkg -i mysql-apt-config_0.8.30-1_all.deb</b>"
+         print_warning_message "   Select <b>\"Server & cluster\"</b> and save settings."
+         print_warning_message ""
+         print_warning_message "3. Update the packages index and install the server:"
+         print_warning_message "   $ <b>sudo apt update</b>"
+         print_warning_message "   $ <b>sudo apt install mysql-server</b>"
+         print_warning_message "   Enter a password for root when prompted. Tadaaah!"
+         print_warning_message ""
+         print_fatal_error "Install <b>mysql-server</b> and come back. Sorry."
+      fi
    fi
+
+   case $var_current_mode in
+    $MODE_WOTLK)
+            _check_packages "$cons_packages_wotlk" "$cons_msg_checking_server_req_packages"
+            case $var_current_dbengine in
+              $DBENGINE_MYSQL) _check_packages "$cons_packages_wotlk_mysql" "$cons_msg_checking_database_req_packages";;
+            esac
+            ;;
+    $MODE_CATACLYSM)
+            _check_packages "$cons_packages_cataclysm" "$cons_msg_checking_server_req_packages"
+            case $var_current_dbengine in
+               $DBENGINE_MYSQL) _check_packages "$cons_packages_cataclysm_mysql" "$cons_msg_checking_database_req_packages";;
+            esac
+            ;;
+    $MODE_MOP)
+            _check_packages "$cons_packages_mop" "$cons_msg_checking_server_req_packages"
+            case $var_current_dbengine in
+               $DBENGINE_MYSQL) _check_packages "$cons_packages_mop_mysql" "$cons_msg_checking_database_req_packages";;
+            esac
+            ;;
+   esac
 
    if [[ $var_installed_packages -gt 0 ]]; then
       print_warning_message "$cons_lit_installed_packages: $var_installed_packages"

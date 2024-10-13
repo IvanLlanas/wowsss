@@ -3,7 +3,7 @@
            \   \/\/  /  _ \  \/\/   /____  \_____  \_____  \
             \       (  (_) )       /        \       \       \
              \__/\  /\____/\__/\  /_______  /_____  /_____  /
-                  \/            \/        \/      \/      \/ 1.2
+                  \/            \/        \/      \/      \/ 1.3
 
 # _World of Warcraft_ Server Script System
 [Github repository](https://github.com/IvanLlanas/wowsss)
@@ -16,7 +16,7 @@ and [Legends-of-Azeroth](https://github.com/Legends-of-Azeroth/Legends-of-Azerot
 
 ## Installation
 Just clone WoWSSS from [github](https://www.github.com/IvanLlanas/wowsss) anywhere in your (sudoer) user directory and launch the `wowsss.sh` script to start the installation and compilation process.
-From now on, every time WoWSSS founds any server installation it will show the maintenance menu, where you'll be able to start/stop the servers, update and compile the sources and make backups.
+From now on, every time WoWSSS finds any server installation it will show the maintenance menu, where you'll be able to start/stop the servers, update and compile the sources and make backups.
 
 ### First start
 

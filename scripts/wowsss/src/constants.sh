@@ -10,8 +10,8 @@ function define_constants_1 ()
 {
    cons_lit_product_name_short="WoWSSS"
    cons_lit_product_name_long="World of Warcraft Server Script System"
-   cons_lit_product_version="1.2"
-   cons_lit_product_date="2024-09-25"
+   cons_lit_product_version="1.3"
+   cons_lit_product_date="2024-10-13"
 
    # ANSI codes - Uncomment those being used.
    # ----------
@@ -305,16 +305,17 @@ function define_constants_1 ()
    cons_url_mop_sql="https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8/releases/download/WDB20231230/world_548_20231230.7z"
 
    # Linux packages
-   cons_packages_wowsss="git p7zip-full unzip gcp screen wget sox"
+   cons_packages_wowsss="git p7zip-full unzip gcp screen wget sox dnsutils"
+      # dnsutils is only required in Debian to get dig. Ubuntu adds it in another pakage.
 
-   cons_packages_ubuntu_wotlk="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev"
-   cons_packages_ubuntu_wotlk_mysql="mysql-server libmysqlclient-dev"
+   cons_packages_wotlk="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev"
+   cons_packages_wotlk_mysql="mysql-server libmysqlclient-dev"
 
-   cons_packages_ubuntu_cataclysm="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev"
-   cons_packages_ubuntu_cataclysm_mysql=$cons_packages_ubuntu_wotlk_mysql
+   cons_packages_cataclysm="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev"
+   cons_packages_cataclysm_mysql=$cons_packages_ubuntu_wotlk_mysql
 
-   cons_packages_ubuntu_mop="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev libace-dev"
-   cons_packages_ubuntu_mop_mysql=$cons_packages_ubuntu_wotlk_mysql
+   cons_packages_mop="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev libace-dev"
+   cons_packages_mop_mysql=$cons_packages_ubuntu_wotlk_mysql
 
    # Application to play a sound file (ogg) and its command line parameters.
    cons_playsound="play -q"

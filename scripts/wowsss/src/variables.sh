@@ -9,6 +9,9 @@ function define_variables_1 ()
 {
    print_full_width "$cons_lit_starting <b>$cons_lit_product_name_long $cons_lit_product_version</b> ($cons_lit_product_date)..."
 
+   # Default wait seconds - Must be here to make it available for print_fatal_error
+   var_wait_seconds=2
+
    # OS name and version -------------------------------------------------------
    var_os_hostname=$HOSTNAME
    if type lsb_release >/dev/null 2>&1; then
@@ -19,8 +22,8 @@ function define_variables_1 ()
       var_os_distribution="$var_os_name $var_os_version ($var_os_codename)"
       case $var_os_name in
         *"Ubuntu"*) var_os_is_ubuntu=1;;
-#       *"Debian"*) var_os_is_debian=1;;
-        *) show_fatal_error "$cons_msg_unknown_linux_version";;
+        *"Debian"*) var_os_is_debian=1;;
+        *) print_fatal_error "$cons_msg_unknown_linux_version";;
       esac
    else
       print_fatal_error "$cons_msg_unknown_linux_version"
@@ -138,9 +141,6 @@ function define_variables_1 ()
    var_db_hotfixes_name=
    var_db_hotfixes_host=
    var_db_hotfixes_port=
-
-   # Default wait seconds
-   var_wait_seconds=2
 
    # Input
    var_answer=                # Used by read_answer as result.
