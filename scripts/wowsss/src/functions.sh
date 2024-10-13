@@ -404,7 +404,7 @@ function print_menu_title ()
 function show_wowsss_info ()
 {
    local from_menu=$1
-   
+
    if [ $from_menu ]; then
       print_full_width "$cons_lit_server_information"
    else
@@ -465,7 +465,7 @@ function show_wowsss_info ()
    print_literal_value "$_c_bold3$var_bin_authserver" "$cons_lit_info_authserver"
    print_literal_value "$_c_bold3$var_bin_worldserver" "$cons_lit_info_worldserver"
    print_literal_value "$var_dir_config"  "$cons_lit_info_conf_dir"
-   print_literal_value "$var_dir_data</b> ($_c_bold3$var_data_files_count</b>)"    "$cons_lit_info_data_dir"
+   print_literal_value "$var_dir_data</b> ($_c_bold3$var_data_files_count</b> $cons_lit_files_lw)"    "$cons_lit_info_data_dir"
    print_literal_value "$var_dir_logs"    "$cons_lit_info_logs_dir"
    print_literal_value "$var_dir_scripts" "$cons_lit_info_scripts_dir"
    print_literal_value "$var_dir_docs"    "$cons_lit_info_docs_dir"

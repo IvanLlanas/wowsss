@@ -3,6 +3,7 @@
 # function servers_sources_download (quit_on_error)
 # function servers_sources_update ()
 # function servers_sources_compile_and_install ()
+# function wowsss_check_update_available ()
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
@@ -27,7 +28,7 @@ function get_sources_hash ()
 # ------------------------------------------------------------------------------
 function _do_sources_check_update_available()
 {
-   # Another function has moved to the git directory to check for updates.
+   # A previous function must have moved to the git directory to check for updates.
    var_sources_update_available=0
    git fetch origin &>/dev/null
 
@@ -267,4 +268,44 @@ function servers_sources_update ()
             ;;
    esac
    sources_check_update_available
+}
+
+# ------------------------------------------------------------------------------
+# function wowsss_check_update_available ()
+# Checks if there is an update for the servers sources. Returns 1 into
+# var_sources_update_available if an update is available or 0 otherwise.
+# Note: var_sources_update_available is meant for server sources only.
+#       Keep its value.
+# ------------------------------------------------------------------------------
+function wowsss_check_update_available()
+{
+   print_info_message "$cons_msg_wowsss_checking_updates"
+   cd "$var_dir_base"
+   _do_sources_check_update_available
+   # Let's reset var_sources_update_available to use it for the real server
+   # sources.
+   var_wowsss_update_available=$var_sources_update_available
+   var_sources_update_available=0
+   #var_wowsss_update_available=1 #debug
+
+   if [[ $var_wowsss_update_available -gt 0 ]]; then
+      print_warning_message "$cons_msg_wowsss_new_version_available"
+      read_answer "$cons_qst_install_update"
+      if [ "$var_answer" = "" ] || [ "$var_answer" = "Y" ] || [ "$var_answer" = "y" ]
+         then
+         print_info_message "$cons_msg_updating"
+         git pull
+         if [ $? -eq 0 ]; then
+            print_error_message "$cons_error_wowsss_updating"
+         else
+            print_warning_message "$cons_msg_wowsss_updated"
+            print_info_message "$cons_msg_restarting"
+            local filename=$(realpath -s "$0")
+            $filename
+         fi
+         exit
+      else
+         print_info_message "$cons_msg_skipping"
+      fi
+   fi
 }

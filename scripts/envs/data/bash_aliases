@@ -46,10 +46,10 @@ alias smbrestart="sudo service smbd restart"
 alias wow="~/wowsss/scripts/wowsss/wowsss.sh"
 
 # Big aliases ---------------------------------------------------
-function findtext ()
+function ft ()
 {
    if [ $# -lt 1 ]; then
-      echo "Usage: findtext text [path]"
+      echo "Usage: ft text [path]"
    else
       local text=$1
       local path=$2

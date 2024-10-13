@@ -495,6 +495,9 @@ function _print_main_menu_header ()
       text=$(head --lines=1 "$filename")
    fi
    print_full_width_server_colors "$text"
+   if [[ $var_wowsss_update_available -gt 0 ]]; then
+      print_warning_centered "$cons_msg_wowsss_update_available"
+   fi
    if [[ $var_sources_update_available -gt 0 ]]; then
       print_warning_centered "$cons_msg_sources_update_available"
    fi

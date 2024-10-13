@@ -116,8 +116,10 @@ function define_variables_1 ()
 
    # Get the sources hash, if any.
    var_sources_hash=
+   # Is there a WoWSSS update?
+   var_wowsss_update_available=0
    # Is there any servers sources update?
-   var_sources_update_available=
+   var_sources_update_available=0
 
    # MySQL user and password for script management.
    var_db_user=$DB_SCRIPT_USER

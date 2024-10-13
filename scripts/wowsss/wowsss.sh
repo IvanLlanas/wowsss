@@ -4,7 +4,7 @@
 #    \   \/\/  /  _ \  \/\/   /____  \_____  \_____  \ 
 #     \       (  (_) )       /        \       \       \
 #      \__/\  /\____/\__/\  /_______  /_____  /_____  /
-#           \/            \/        \/      \/      \/ 1.2
+#           \/            \/        \/      \/      \/ 1.3
 # ------------------------------------------------------------------------------
 # World of Warcraft Server Script System
 # (C) Copyright by Ivan Llanas, 2023-24
@@ -53,6 +53,8 @@ function main ()
    define_constants_1
    define_variables_1
 
+   wowsss_check_update_available
+
    while : ; do
       detect_or_select_server_mode
       detect_or_select_dbengine
@@ -94,6 +96,7 @@ function main ()
       var_force_switch_mode=0
 
       play_sound_ready
+
       wowsss_main_menu
 
    [[ $var_force_switch_mode -gt 0 ]] || break

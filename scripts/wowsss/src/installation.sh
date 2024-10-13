@@ -147,7 +147,7 @@ function detect_or_select_server_mode ()
             var_ws_process_name="worldserver"
             var_bin_authserver="$var_dir_bin_cataclysm/$var_as_process_name"
             var_bin_worldserver="$var_dir_bin_cataclysm/$var_ws_process_name"
-            
+
             var_db_auth_name=$cons_cataclysm_db_auth_name
             var_db_world_name=$cons_cataclysm_db_world_name
             var_db_chars_name=$cons_cataclysm_db_characters_name
@@ -425,6 +425,7 @@ function initial_check_sql_files ()
             print_fatal_error "$cons_msg_error_extracting_sql"
          fi
       fi
+      print_info_message "$cons_msg_done"
    fi
    if [ $var_current_mode == $MODE_MOP ]; then
       print_full_width "$cons_msg_checking_sql"
@@ -445,6 +446,6 @@ function initial_check_sql_files ()
             print_fatal_error "$cons_msg_error_extracting_sql"
          fi
       fi
+      print_info_message "$cons_msg_done"
    fi
-   print_info_message "$cons_msg_done"
 }
