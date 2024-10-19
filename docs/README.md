@@ -9,13 +9,13 @@
 [Github repository](https://github.com/IvanLlanas/wowsss)
 
 ## Description
-WoWSSS is a script system designed to install and manage a World of Warcraft private server from scratch.
-It uses [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) for a "Wrath of the Lich King" server,
- [TrinityCore](https://github.com/The-Cataclysm-Preservation-Project/TrinityCore) for a "Cataclysm" server
-and [Legends-of-Azeroth](https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8) for a "Mists of Pandaria" server.
+WoWSSS is a script system designed to install and manage a _World of Warcraft_ private server from scratch.
+It uses [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) for a "_Wrath of the Lich King_" server,
+ [TrinityCore](https://github.com/The-Cataclysm-Preservation-Project/TrinityCore) for a "_Cataclysm_" server
+and [Legends-of-Azeroth](https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8) for a "_Mists of Pandaria_" server.
 
 ## Installation
-Just clone WoWSSS from [github](https://www.github.com/IvanLlanas/wowsss) anywhere in your (sudoer) user directory and launch the `wowsss.sh` script to start the installation and compilation process.
+Just clone WoWSSS from [github](https://www.github.com/IvanLlanas/wowsss) anywhere in your (sudoer) user directory and launch the `start.sh`or `wowsss.sh` scripts to start the installation and compilation process.
 From now on, every time WoWSSS finds any server installation it will show the maintenance menu, where you'll be able to start/stop the servers, update and compile the sources and make backups.
 
 ### First start
