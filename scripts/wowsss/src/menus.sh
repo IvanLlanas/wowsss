@@ -69,6 +69,8 @@ function wowsss_main_menu ()
       CR
       print_x $c1 $d"Q$x)"
       print_x $c2 $_c_menu_text"$cons_option_quit"$x
+      print_x $c3 $d"X$x)"
+      print_x $c4 $make_enabled"$cons_option_shutdown_host"$x
       CR
       CR
       read_answer "$cons_msg_choose_an_option"
@@ -93,6 +95,18 @@ function wowsss_main_menu ()
                ;;
        "Q")    print_info_message "$cons_msg_good_bye";
                return
+               ;;
+       "X")    ensure_no_server_running
+               if [ $var_no_server_running ]; then
+                  print_info_message "$cons_msg_good_bye";
+                  print_warning_message "Shutting down...";
+                  if [[ $SSH_CLIENT == "" ]]; then
+                     poweroff
+                  else
+                     sudo poweroff
+                  fi
+                  exit
+               fi
                ;;
          *)    print_error_message "$cons_msg_error_invalid_option_\"<b>$var_answer</b>\".";;
       esac
@@ -319,8 +333,6 @@ function main_menu_backup_databases_other ()
 # ------------------------------------------------------------------------------
 function main_menu_restore_databases ()
 {
-   local sql_dir="$var_dir_scripts/sql"
-
    ensure_no_server_running
    if [ $var_no_server_running ]; then
       print_warning_message ""
@@ -333,16 +345,18 @@ function main_menu_restore_databases ()
       if [ "$var_current_mode" = "$MODE_CATACLYSM" ]; then
       print_warning_message "$cons_msg_restore_db_7_c"
       fi
+      print_warning_message ""
       print_warning_message "$cons_msg_restore_db_8"
+      print_warning_message "$cons_msg_restore_db_9"
       print_warning_message ""
       read_confirmation "$cons_option_restore_databases"
       if [ $var_confirmed ]; then
          print_full_width "$cons_option_restore_databases"
-         cd "$sql_dir"
+         cd "$var_dir_sql"
          CR
-         database_import_from_script "$var_db_auth_name" "$sql_dir/$var_db_auth_name.sql"
-         database_import_from_script "$var_db_chars_name" "$sql_dir/$var_db_chars_name.sql"
-         database_import_from_script "$var_db_world_name" "$sql_dir/$var_db_world_name.sql"
+         database_import_from_script "$var_db_auth_name" "$var_dir_sql/$var_db_auth_name.sql"
+         database_import_from_script "$var_db_chars_name" "$var_dir_sql/$var_db_chars_name.sql"
+         database_import_from_script "$var_db_world_name" "$var_dir_sql/$var_db_world_name.sql"
          if [ "$var_current_mode" = "$MODE_CATACLYSM" ]; then
             database_import_from_script "$var_db_hotfixes_name" "$sql_dir/$var_db_hotfixes_name.sql"
          fi
@@ -468,6 +482,7 @@ function main_menu_configure_realms_ips ()
                   print_error_message "$cons_error_applying_changes"
                else
                   print_info_message "$cons_msg_done"
+                  database_get_realm_info
                fi
             fi
             return

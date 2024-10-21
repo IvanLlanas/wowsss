@@ -41,6 +41,7 @@ function define_variables_1 ()
    var_dir_base=${var_dir_wowsss_script%/*/*} # Remove the last 2 subdirs (wowsss and scripts) from the current script's path.
    # Scripts directory
    var_dir_scripts="$var_dir_base/scripts"
+   var_dir_sql="$var_dir_scripts/sql"
    # Logs directory
    var_dir_logs="$var_dir_base/logs"
    # Docs directory
@@ -160,8 +161,7 @@ function define_variables_1 ()
    # System IP's
    var_internal_ip=
    var_external_ip=
-   # get_ips # No, not yet. We'll get them just before showing the menu.
-   
+
    # Realm info
    var_realm_name=
    var_realm_internal_ip=

@@ -211,10 +211,16 @@ function database_import_from_script ()
 {
    local db=$1
    local script=$2
-   print_info_message "Importing \"<b>$db</b>\" database:"
+   print_info_message "Importing \"<b>$db</b>\" database (enter MySQL/<b>$var_db_user</b> password):"
    if test -f "$script"; then
       # We're not using the temporary credentials filename, we want to be prompted for the password.
       mysql -u $var_db_user -p $db < "$script"
+      local result=$?
+      if [ $result -eq 0 ]; then
+         if [ $db == $var_db_auth_name ]; then
+            database_get_realm_info
+         fi
+      fi
    else
       print_error_message "File <b>$script</b> not found. Database <b>$db</b> bypassed."
    fi

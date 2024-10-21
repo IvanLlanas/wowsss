@@ -76,7 +76,7 @@ function get_ips ()
    var_external_ip=$(dig +short myip.opendns.com @resolver4.opendns.com)
 #  var_external_ip=$(curl -s http://whatismyip.akamai.com/) # This one requires curl package.
    # remove trailing whitespace characters
-   var_internal_ip="${var_internal_ip%"${var_internal_ip##*[![:space:]]}"}"   
+   var_internal_ip="${var_internal_ip%"${var_internal_ip##*[![:space:]]}"}"
 }
 
 # ------------------------------------------------------------------------------
