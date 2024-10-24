@@ -99,7 +99,7 @@ function wowsss_main_menu ()
        "X")    ensure_no_server_running
                if [ $var_no_server_running ]; then
                   print_info_message "$cons_msg_good_bye";
-                  print_warning_message "Shutting down...";
+                  print_warning_message "$cons_msg_shutting_down";
                   if [[ $SSH_CLIENT == "" ]]; then
                      poweroff
                   else

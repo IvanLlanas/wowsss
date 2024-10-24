@@ -51,6 +51,7 @@ function databases_backup ()
    local sufix="$1"
    local databases="$2"
    local databases_array=($databases)
+   local uparams="--defaults-extra-file=$var_db_client_file"
    local files=""
 
    cd "$var_dir_temp"
@@ -59,16 +60,16 @@ function databases_backup ()
       local script=$database.sql
       files=$files" $script"
       print_info_message "$cons_lit_extracting <b>$database</b>..."
-      mysqldump --user=$var_db_user --password=$var_db_pass $database > $script
+      mysqldump $uparams $database > $script
       # We'll additionally split data and structure for the characters database.
       if [ $database = $cons_wotlk_db_characters_name ] || [ $database = $cons_cataclysm_db_characters_name ] || [ $database = $cons_mop_db_characters_name ]
       then
          script=$database-structure.sql
          files=$files" $script"
-         mysqldump --user=$var_db_user --password=$var_db_pass $database > $script --no-data
+         mysqldump $uparams $database > $script --no-data
          script=$database-data.sql
          files=$files" $script"
-         mysqldump --user=$var_db_user --password=$var_db_pass $database > $script --no-create-info
+         mysqldump $uparams $database > $script --no-create-info
       fi
    done
    filename=$(date +"%Y-%m-%d_%H-%M-%S")_$sufix.7z

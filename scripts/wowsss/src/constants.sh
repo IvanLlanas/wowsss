@@ -252,6 +252,7 @@ function define_constants_1 ()
    cons_msg_error_servers_running="Servers are running. Shut them down first before continuing."
 
    cons_msg_good_bye="Good bye!"
+   cons_msg_shutting_down="Shutting down..."
    cons_msg_error_invalid_option_="Invalid option "
    cons_msg_choose_an_option=" Please, choose an option: "
    cons_option_server_information="Show servers information"
