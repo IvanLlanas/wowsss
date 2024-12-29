@@ -1,4 +1,4 @@
-# ------------------------------------------------------------------------------
+çç# ------------------------------------------------------------------------------
 #     __      __    __      __________________________
 #    /  \    /  \__/  \    /  \ _____/  _____/  _____/
 #    \   \/\/  /  _ \  \/\/   /____  \_____  \_____  \ 
@@ -92,11 +92,8 @@ function main ()
       get_ips # We'll only get the IP's for menu mode and only once. Well, show_wowsss_info may call it too.
       get_sources_hash
       sources_check_update_available
-
       var_force_switch_mode=0
-
       play_sound_ready
-
       wowsss_main_menu
 
    [[ $var_force_switch_mode -gt 0 ]] || break

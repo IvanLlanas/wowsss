@@ -30,7 +30,8 @@ function _do_sources_check_update_available()
 {
    # A previous function must have moved to the git directory to check for updates.
    var_sources_update_available=0
-   git fetch origin &>/dev/null
+#   git fetch origin &>/dev/null
+   git fetch origin
 
    local UPSTREAM=${1:-'@{u}'}
    local LOCAL=$(git rev-parse @)

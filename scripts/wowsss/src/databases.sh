@@ -102,7 +102,7 @@ function databases_check_create ()
       # At this point we surely have the required SQL scripts.
       _database_check_table_exists "$var_db_auth_name" "realmlist" "$var_dir_sources/sql/base/auth.sql"
       _database_check_table_exists "$var_db_chars_name" "characters" "$var_dir_sources/sql/base/characters.sql"
-      _database_check_table_exists "$var_db_world_name" "item_template" "$var_dir_sources/world_548_20231230.sql"
+      _database_check_table_exists "$var_db_world_name" "item_template" "$var_dir_sources/world_548_20240722.sql"
    fi
 }
 

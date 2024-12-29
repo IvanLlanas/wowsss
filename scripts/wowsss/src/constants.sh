@@ -315,7 +315,8 @@ function define_constants_1 ()
    # cons_url_cataclysm_sql="https://github.com/IvanLlanas/cataclysm-server-sql-files/releases/download/v2201/sql-files.7z"
    cons_url_cataclysm_sql="https://github.com/The-Cataclysm-Preservation-Project/TrinityCore/releases/download/TDB434.22011/TDB_full_434.22011_2022_01_09.7z"
    cons_url_mop_data="https://github.com/IvanLlanas/mop-server-data-files/releases/download/v2401/data.7z"
-   cons_url_mop_sql="https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8/releases/download/WDB20231230/world_548_20231230.7z"
+#  cons_url_mop_sql="https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8/releases/download/WDB20231230/world_548_20231230.7z"
+   cons_url_mop_sql="https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8/releases/download/WDB20231230/world_548_20240722.7z"
 
    # Linux packages
    cons_packages_wowsss="git p7zip-full unzip gcp screen wget sox dnsutils"
@@ -327,7 +328,8 @@ function define_constants_1 ()
    cons_packages_cataclysm="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev"
    cons_packages_cataclysm_mysql=$cons_packages_ubuntu_wotlk_mysql
 
-   cons_packages_mop="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev libace-dev"
+#  cons_packages_mop="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev libace-dev"
+   cons_packages_mop="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev"
    cons_packages_mop_mysql=$cons_packages_ubuntu_wotlk_mysql
 
    # Application to play a sound file (ogg) and its command line parameters.
