@@ -302,7 +302,7 @@ function wowsss_check_update_available()
             print_warning_message "$cons_msg_wowsss_updated"
             print_info_message "$cons_msg_restarting"
             local filename=$(realpath -s "$0")
-            $filename
+            ( exec "$filename" )
          fi
          exit
       else
