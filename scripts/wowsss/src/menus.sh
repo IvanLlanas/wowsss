@@ -101,9 +101,9 @@ function wowsss_main_menu ()
                   print_info_message "$cons_msg_good_bye";
                   print_warning_message "$cons_msg_shutting_down";
                   if [[ $SSH_CLIENT == "" ]]; then
-                     poweroff
+                     sudo systemctl poweroff
                   else
-                     sudo poweroff
+                     sudo systemctl poweroff
                   fi
                   exit
                fi
