@@ -31,6 +31,7 @@ function wowsss_main_menu ()
    local c1=$mn_c1_letter
    local c2=$mn_c1_text
    local c3=$mn_c2_letter
+   local c3q=$c3
    local c4=$mn_c2_text
 
    database_get_realm_info
@@ -69,8 +70,9 @@ function wowsss_main_menu ()
       CR
       print_x $c1 $d"Q$x)"
       print_x $c2 $_c_menu_text"$cons_option_quit"$x
-      print_x $c3 $d"X$x)"
-      print_x $c4 $make_enabled"$cons_option_shutdown_host"$x
+      c3q=$(expr $c3q - 5)
+      print_x $c3q $d"Qs, Qr$x)"
+      print_x $c4 $make_enabled"$cons_option_shutdown_options"$x
       CR
       CR
       read_answer "$cons_msg_choose_an_option"
@@ -96,15 +98,19 @@ function wowsss_main_menu ()
        "Q")    print_info_message "$cons_msg_good_bye";
                return
                ;;
-       "X")    ensure_no_server_running
+       "QR")   ensure_no_server_running
+               if [ $var_no_server_running ]; then
+                  print_info_message "$cons_msg_see_you";
+                  print_warning_message "$cons_msg_rebooting";
+                  sudo systemctl reboot
+                  exit
+               fi
+               ;;
+       "QS")   ensure_no_server_running
                if [ $var_no_server_running ]; then
                   print_info_message "$cons_msg_good_bye";
                   print_warning_message "$cons_msg_shutting_down";
-                  if [[ $SSH_CLIENT == "" ]]; then
-                     sudo systemctl poweroff
-                  else
-                     sudo systemctl poweroff
-                  fi
+                  sudo systemctl poweroff
                   exit
                fi
                ;;
@@ -479,7 +485,7 @@ function main_menu_configure_realms_ips ()
                database_setup_realm "$ext_ip" "$int_ip"
                local result=$?
                if [ $result -ne 0 ]; then
-                  print_error_message "$cons_error_applying_changes"
+                  print_error_message "$cons_error_applqying_changes"
                else
                   print_info_message "$cons_msg_done"
                   database_get_realm_info
