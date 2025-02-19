@@ -138,7 +138,9 @@ function servers_sources_download ()
 
    case $var_current_mode in
       $MODE_WOTLK)
-         cmake ../ -DCMAKE_INSTALL_PREFIX=$var_dir_servers/ -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DTOOLS_BUILD=maps-only -DSCRIPTS=static -DMODULES=static
+         # cmake ../ -DCMAKE_INSTALL_PREFIX=$var_dir_servers/ -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DTOOLS_BUILD=maps-only -DSCRIPTS=static -DMODULES=static
+         # 2025/02/14
+         cmake ../ -DCMAKE_INSTALL_PREFIX=$var_dir_servers/ -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DTOOLS_BUILD=all -DSCRIPTS=static -DMODULES=static
          ;;
       $MODE_CATACLYSM)
          cmake ../ -DCMAKE_INSTALL_PREFIX=$var_dir_servers/ -DSERVERS=1 -DTOOLS=1 -DWITH_WARNINGS=1

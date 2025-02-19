@@ -19,6 +19,50 @@ function print_x ()
    echo -en "$msg"
 }
 
+
+# ------------------------------------------------------------------------------
+# function shutdown_host (reboot)
+# Shutdowns or reboots (reboot=1) the host if no server is running.
+# ------------------------------------------------------------------------------
+function shutdown_host ()
+{
+   local reboot=$1
+   ensure_no_server_running
+   if [ $var_no_server_running ]; then
+      if [ $reboot -gt 0 ]; then
+         print_info_message "$cons_msg_see_you";
+         print_warning_message "$cons_msg_rebooting";
+         if [ $var_os_is_ubuntu ]; then
+            if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+               sudo reboot
+            else
+               reboot
+            fi
+            exit
+         elif [ $var_os_is_debian ]; then
+            sudo systemctl reboot
+            exit
+         fi
+      else
+         print_info_message "$cons_msg_good_bye";
+         print_warning_message "$cons_msg_shutting_down";
+         if [ $var_os_is_ubuntu ]; then
+            if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+               sudo poweroff
+            else
+               poweroff
+            fi
+            exit
+         elif [ $var_os_is_debian ]; then
+            sudo systemctl poweroff
+            exit
+         fi
+      fi
+      print_fatal_error "$cons_msg_unknown_linux_version"
+      exit
+   fi
+}
+
 # ------------------------------------------------------------------------------
 # function wowsss_main_menu ()
 # Enters the menu mode of the script.
@@ -70,8 +114,8 @@ function wowsss_main_menu ()
       CR
       print_x $c1 $d"Q$x)"
       print_x $c2 $_c_menu_text"$cons_option_quit"$x
-      c3q=$(expr $c3q - 5)
-      print_x $c3q $d"Qs, Qr$x)"
+      c3q=$(expr $c3 - 3)
+      print_x $c3q $d"X$x,$d Y$x)"
       print_x $c4 $make_enabled"$cons_option_shutdown_options"$x
       CR
       CR
@@ -95,24 +139,12 @@ function wowsss_main_menu ()
                   #fi
                fi
                ;;
-       "Q")    print_info_message "$cons_msg_good_bye";
+       "Q")    print_info_message "$cons_msg_good_bye"
                return
                ;;
-       "QR")   ensure_no_server_running
-               if [ $var_no_server_running ]; then
-                  print_info_message "$cons_msg_see_you";
-                  print_warning_message "$cons_msg_rebooting";
-                  sudo systemctl reboot
-                  exit
-               fi
+       "X")    shutdown_host 0
                ;;
-       "QS")   ensure_no_server_running
-               if [ $var_no_server_running ]; then
-                  print_info_message "$cons_msg_good_bye";
-                  print_warning_message "$cons_msg_shutting_down";
-                  sudo systemctl poweroff
-                  exit
-               fi
+       "Y")    shutdown_host 1
                ;;
          *)    print_error_message "$cons_msg_error_invalid_option_\"<b>$var_answer</b>\".";;
       esac
