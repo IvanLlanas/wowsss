@@ -1,8 +1,9 @@
-/*
-   Add transmogrifier NPC
-   ----------------------
-   With a gm account goto the location you want (position and orientation) to
-   add the npc and use this command:
+
+/* ----------------------- */
+/* Add transmogrifier NPC */
+/* --------------------- */
+/* With a gm character goto the location you want (position and orientation)
+   to add the transmogrifier NPC and use this command:
    .npc add 190010
 */
 

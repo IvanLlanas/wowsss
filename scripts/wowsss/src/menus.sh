@@ -79,6 +79,7 @@ function wowsss_main_menu ()
    local c4=$mn_c2_text
 
    database_get_realm_info
+   _autostart_servers
    while [ true ]
    do
       _update_menu_colors
@@ -530,7 +531,6 @@ function main_menu_configure_realms_ips ()
    fi
 }
 
-
 # ------------------------------------------------------------------------------
 # function _print_main_menu_header ()
 # ------------------------------------------------------------------------------
@@ -572,4 +572,23 @@ function _print_main_menu_header ()
       print_x $c3 "$cons_lit_internal_ip: $_c_bold1$var_realm_internal_ip$x"
    CR
    CR
+}
+
+# ------------------------------------------------------------------------------
+# function _autostart_servers
+# Checks if servers must be autostarted
+# ------------------------------------------------------------------------------
+function _autostart_servers ()
+{
+   # If there are sources updates available...
+   if [[ $var_sources_update_available -gt 0 ]]; then
+      if [[ $AUTOSTART_SERVERS_OUTDATED -gt 0 ]]; then
+         main_menu_servers_start
+      fi
+   else
+   # If there are not sources updates available...
+      if [[ $AUTOSTART_SERVERS_UPDATED -gt 0 ]]; then
+         main_menu_servers_start
+      fi
+   fi
 }

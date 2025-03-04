@@ -15,8 +15,9 @@ It uses [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) for a "_
 and [Legends-of-Azeroth](https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8) for a "_Mists of Pandaria_" server.
 
 ## Installation
-Just clone WoWSSS from [github](https://www.github.com/IvanLlanas/wowsss) anywhere in your (sudoer) user directory and launch the `start.sh`or `wowsss.sh` scripts to start the installation and compilation process.
+Just clone WoWSSS from [github](https://www.github.com/IvanLlanas/wowsss) anywhere in your (sudoer) user directory and launch the `start.sh` or `wowsss.sh` scripts to start the installation and compilation process.
 From now on, every time WoWSSS finds any server installation it will show the maintenance menu, where you'll be able to start/stop the servers, update and compile the sources and make backups.
+Copy file `settings.sh.dist` to `settings.sh`. Edit file `settings.sh` to setup your preferences.
 
 ### First start
 

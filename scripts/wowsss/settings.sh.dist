@@ -1,4 +1,7 @@
 # ##############################################################################
+# Copy this file to "settings.sh" and edit it to avoid discarding all your
+# changes after every update.
+# ------------------------------------------------------------------------------
 # These values should be checked and updated by the user BEFORE running WoWSSS.
 # While they should work for a fresh system installation, you'll may need to
 # adjust some of them for already working systems.
