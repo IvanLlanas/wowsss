@@ -80,3 +80,9 @@ CPU_CORES=$(expr $(nproc) - 2)
 REMOTE_BACKUPS=1
 # Set this to your remote backups directory.
 REMOTE_BACKUPS_DIR=$HOME/remote
+
+# Autostart the servers if the sources are updated?
+AUTOSTART_SERVERS_UPDATED=1
+
+# Autostart the servers even if the sources are outdated?
+AUTOSTART_SERVERS_OUTDATED=0
