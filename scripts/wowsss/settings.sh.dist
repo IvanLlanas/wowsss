@@ -82,7 +82,7 @@ REMOTE_BACKUPS=1
 REMOTE_BACKUPS_DIR=$HOME/remote
 
 # Autostart the servers if the sources are updated?
-AUTOSTART_SERVERS_UPDATED=1
+AUTOSTART_SERVERS_UPDATED=0
 
 # Autostart the servers even if the sources are outdated?
 AUTOSTART_SERVERS_OUTDATED=0
