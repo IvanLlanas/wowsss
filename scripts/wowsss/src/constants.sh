@@ -10,8 +10,8 @@ function define_constants_1 ()
 {
    cons_lit_product_name_short="WoWSSS"
    cons_lit_product_name_long="World of Warcraft Server Script System"
-   cons_lit_product_version="1.3"
-   cons_lit_product_date="2024-10-13"
+   cons_lit_product_version="1.4"
+   cons_lit_product_date="2025-03-07"
 
    # ANSI codes - Uncomment those being used.
    # ----------

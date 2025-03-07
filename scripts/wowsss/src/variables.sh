@@ -23,6 +23,7 @@ function define_variables_1 ()
       case $var_os_name in
         *"Ubuntu"*) var_os_is_ubuntu=1;;
         *"Debian"*) var_os_is_debian=1;;
+        *"mint"*)   var_os_is_ubuntu=1;;
         *) print_fatal_error "$cons_msg_unknown_linux_version";;
       esac
    else

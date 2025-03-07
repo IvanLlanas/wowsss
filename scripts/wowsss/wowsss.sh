@@ -4,7 +4,7 @@
 #    \   \/\/  /  _ \  \/\/   /____  \_____  \_____  \ 
 #     \       (  (_) )       /        \       \       \
 #      \__/\  /\____/\__/\  /_______  /_____  /_____  /
-#           \/            \/        \/      \/      \/ 1.3
+#           \/            \/        \/      \/      \/ 1.4
 # ------------------------------------------------------------------------------
 # World of Warcraft Server Script System
 # (C) Copyright by Ivan Llanas, 2023-24
@@ -19,6 +19,34 @@
 # MoP - LegendsOfAzeroth
 #    https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8
 # ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# function check_settings_file ()
+# Checks if file settings.sh is present. If not then copies from *.dist file
+# and notifies the user.
+# Note that this function is called BEFORE constants creation so message texts
+# will be inside this function (by now).
+# ------------------------------------------------------------------------------
+function check_settings_file ()
+{
+   local filename=$(realpath -s "$0")
+   local     path=$(dirname "$filename")
+   filename="$path/settings.sh"
+
+   if [ ! -f "$filename" ]; then
+      local _tb="\e[93m"
+      local _tn="\e[97m"
+      local _bge="\e[41m"
+      local _bgi="\e[44m"
+      local _0="\e[0m"
+
+      cp "$filename.dist" "$filename"
+      echo -e $_tn$_bge"[ File $_tb$filename$_tn was not found. A new one has just been created. ]"$_0
+      echo -e $_tn$_bgi"[ Edit file $_tb$filename$_tn to fit your needs. Really. ]"$_0
+      echo
+      exit
+   fi
+}
 
 # ------------------------------------------------------------------------------
 # function include_modules ()
@@ -49,6 +77,7 @@ function main ()
    # We want case-insensitive comparisons.
    shopt -s nocasematch
 
+   check_settings_file
    include_modules
    define_constants_1
    define_variables_1
