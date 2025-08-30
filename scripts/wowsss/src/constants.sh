@@ -10,8 +10,8 @@ function define_constants_1 ()
 {
    cons_lit_product_name_short="WoWSSS"
    cons_lit_product_name_long="World of Warcraft Server Script System"
-   cons_lit_product_version="1.4"
-   cons_lit_product_date="2025-03-07"
+   cons_lit_product_version="1.5"
+   cons_lit_product_date="2025-08-31"
 
    # ANSI codes - Uncomment those being used.
    # ----------
@@ -321,8 +321,10 @@ function define_constants_1 ()
    cons_url_mop_sql="https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8/releases/download/WDB20231230/world_548_20240722.7z"
 
    # Linux packages
-   cons_packages_wowsss="git p7zip-full unzip gcp screen wget sox dnsutils"
-      # dnsutils is only required in Debian to get dig. Ubuntu adds it in another pakage.
+   cons_packages_wowsss="git p7zip-full unzip gcp screen wget sox"
+      # dnsutils is only required in Debian 12 to get dig. Ubuntu adds it in another package.
+      cons_packages_wowsss_deb12="dnsutils"
+      cons_packages_wowsss_deb13="bind9-dnsutils"
 
    cons_packages_wotlk="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev"
    cons_packages_wotlk_mysql="mysql-server libmysqlclient-dev"

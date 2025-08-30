@@ -4,13 +4,13 @@
 #    \   \/\/  /  _ \  \/\/   /____  \_____  \_____  \ 
 #     \       (  (_) )       /        \       \       \
 #      \__/\  /\____/\__/\  /_______  /_____  /_____  /
-#           \/            \/        \/      \/      \/ 1.4
+#           \/            \/        \/      \/      \/ 1.5
 # ------------------------------------------------------------------------------
 # World of Warcraft Server Script System
-# (C) Copyright by Ivan Llanas, 2023-24
+# (C) Copyright by Ivan Llanas, 2023-25
 # ------------------------------------------------------------------------------
 # This script performs all the functions related to a "World of Warcraft"
-# private server installation and maintenance on a Ubuntu or Debian system.
+# private server installation and maintenance on an Ubuntu or Debian system.
 # ------------------------------------------------------------------------------
 # WotLK - AzerothCore
 #    https://github.com/azerothcore/azerothcore-wotlk

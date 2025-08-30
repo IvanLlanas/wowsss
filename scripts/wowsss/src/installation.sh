@@ -268,29 +268,59 @@ function _check_packages ()
 # ------------------------------------------------------------------------------
 function initial_check_required_packages ()
 {
+   local version=12
    _check_packages "$cons_packages_wowsss" "$cons_msg_checking_wowsss_req_packages"
 
    if [ -n "$var_os_is_debian" ]; then
+
+      if [ $var_os_version == 13 ]; then
+         _check_packages "$cons_packages_wowsss_deb13" "$cons_msg_checking_wowsss_req_packages"
+      else
+         _check_packages "$cons_packages_wowsss_deb12" "$cons_msg_checking_wowsss_req_packages"
+      fi
+
       # Debian (12) does not include mysql-server in its repositories and it must be installed
       # manually.
       local installed=$(is_package_installed "mysql-server")
       if [ $installed = 0 ]; then
          print_warning_message ""
          print_warning_message "<b>mysql-server</b> is not installed in this system. You must install it manually before continuing."
-         print_warning_message "Manual procedure documented in: <b>https://docs.vultr.com/how-to-install-mysql-on-debian-12</b>"
-         print_warning_message ""
-         print_warning_message "1. Download the latest MySQL repository information package."
-         print_warning_message "   $ <b>wget https://dev.mysql.com/get/mysql-apt-config_0.8.30-1_all.deb</b>"
-         print_warning_message ""
-         print_warning_message "2. Install the MySQL repository information using the file."
-         print_warning_message "   $ <b>sudo dpkg -i mysql-apt-config_0.8.30-1_all.deb</b>"
-         print_warning_message "   Select <b>\"Server & cluster\"</b> and save settings."
-         print_warning_message ""
-         print_warning_message "3. Update the packages index and install the server:"
-         print_warning_message "   $ <b>sudo apt update</b>"
-         print_warning_message "   $ <b>sudo apt install mysql-server</b>"
-         print_warning_message "   Enter a password for root when prompted. Tadaaah!"
-         print_warning_message ""
+         if [ $var_os_version == 12 ]; then
+            print_warning_message "Manual procedure documented in: <b>https://docs.vultr.com/how-to-install-mysql-on-debian-12</b>"
+            print_warning_message ""
+            print_warning_message "1. Download the latest MySQL repository information package."
+            print_warning_message "   $ <b>wget https://dev.mysql.com/get/mysql-apt-config_0.8.30-1_all.deb</b>"
+            print_warning_message ""
+            print_warning_message "2. Install the MySQL repository information using the file."
+            print_warning_message "   $ <b>sudo dpkg -i mysql-apt-config_0.8.30-1_all.deb</b>"
+            print_warning_message "   Select <b>\"Server & cluster\"</b> and <b>mysql-8.4-lts</b> and save settings."
+            print_warning_message ""
+            print_warning_message "3. Update the packages index and install the server:"
+            print_warning_message "   $ <b>sudo apt update</b>"
+            print_warning_message "   $ <b>sudo apt install mysql-server</b>"
+            print_warning_message "   Enter a password for root when prompted. Tadaaah!"
+            print_warning_message ""
+         elif [ $var_os_version == 13 ]; then
+            print_warning_message "Manual procedure documented in: <b>https://wiki.crowncloud.net/?How_to_Install_MySQL_8_on_Debian_13</b>"
+            print_warning_message ""
+            print_warning_message "1. Download the latest MySQL repository information package."
+            print_warning_message "   $ <b>wget https://repo.mysql.com//mysql-apt-config_0.8.32-1_all.deb</b>"
+            print_warning_message ""
+            print_warning_message "2. Install the MySQL repository information using the file."
+            print_warning_message "   $ <b>sudo dpkg -i mysql-apt-config_0.8.32-1_all.deb</b>"
+            print_warning_message "   Select <b>\"Server & cluster\"</b> and save settings."
+            print_warning_message "3. Install the library libaio1, missing in Debian 13."
+            print_warning_message "   $ <b>wget http://deb.debian.org/debian/pool/main/liba/libaio/libaio1_0.3.113-4_amd64.deb</b>"
+            print_warning_message "   $ <b>sudo apt install ./libaio1_0.3.113-4_amd64.deb</b>"
+            print_warning_message ""
+            print_warning_message "4. Update the packages index and install the server:"
+            print_warning_message "   $ <b>sudo apt update</b>"
+            print_warning_message "   $ <b>sudo apt install mysql-server</b>"
+            print_warning_message "   Enter a password for root when prompted. Tadaaah!"
+            print_warning_message ""
+         else
+            print_warning_message "Go out there and find out how to do it."
+         fi
          print_fatal_error "Install <b>mysql-server</b> and come back. Sorry."
       fi
    fi

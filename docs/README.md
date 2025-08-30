@@ -3,7 +3,7 @@
            \   \/\/  /  _ \  \/\/   /____  \_____  \_____  \
             \       (  (_) )       /        \       \       \
              \__/\  /\____/\__/\  /_______  /_____  /_____  /
-                  \/            \/        \/      \/      \/ 1.4
+                  \/            \/        \/      \/      \/ 1.5
 
 # _World of Warcraft_ Server Script System
 [Github repository](https://github.com/IvanLlanas/wowsss)
@@ -15,7 +15,7 @@ It uses [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) for a "_
 and [Legends-of-Azeroth](https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8) for a "_Mists of Pandaria_" server.
 
 ## Installation
-Supported (and tested) distributions: Ubuntu 24, Ubuntu 22(1), Linuxmint 22, Kubuntu 24, Lubuntu 24, Debian 12(1).
+Supported (and tested) distributions: Ubuntu 24/25, Ubuntu 22(1), Linuxmint 22, Kubuntu 24, Lubuntu 24, Debian 12/13(1).
 Just clone WoWSSS from [github](https://www.github.com/IvanLlanas/wowsss) anywhere in your (sudoer) user directory.
 Copy file `settings.sh.dist` to `settings.sh`. Edit file `settings.sh` to setup your preferences.
 Launch the `start.sh` or `wowsss.sh` scripts to start the installation and compilation process.
