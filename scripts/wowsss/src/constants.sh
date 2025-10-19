@@ -304,7 +304,6 @@ function define_constants_1 ()
    cons_error_applying_changes="Error applying changes."
 
    # URL's
-   # cons_wotlk_data_url="https://github.com/wowgaming/client-data/releases/download/v16/data.zip"
    cons_url_wotlk_sources_github="https://github.com/azerothcore/azerothcore-wotlk.git"
    cons_url_wotlk_sources_project="https://github.com/azerothcore/azerothcore-wotlk"
    cons_url_catacysm_sources_github="https://github.com/The-Cataclysm-Preservation-Project/TrinityCore.git"
@@ -312,7 +311,8 @@ function define_constants_1 ()
    cons_url_mop_sources_github="https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8.git"
    cons_url_mop_sources_project="https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8"
 
-   cons_url_wotlk_data="https://github.com/IvanLlanas/wotlk-server-data-files/releases/download/v16/data.7z"
+   # Original data files can be found at https://github.com/wowgaming/client-data/releases/
+   cons_url_wotlk_data="https://github.com/IvanLlanas/wotlk-server-data-files/releases/download/v17/data.7z"
    cons_url_cataclysm_data="https://github.com/IvanLlanas/cataclysm-server-data-files/releases/download/v2312/data.7z"
    # cons_url_cataclysm_sql="https://github.com/IvanLlanas/cataclysm-server-sql-files/releases/download/v2201/sql-files.7z"
    cons_url_cataclysm_sql="https://github.com/The-Cataclysm-Preservation-Project/TrinityCore/releases/download/TDB434.22011/TDB_full_434.22011_2022_01_09.7z"
