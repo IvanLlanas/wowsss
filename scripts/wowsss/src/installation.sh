@@ -268,7 +268,6 @@ function _check_packages ()
 # ------------------------------------------------------------------------------
 function initial_check_required_packages ()
 {
-   local version=12
    _check_packages "$cons_packages_wowsss" "$cons_msg_checking_wowsss_req_packages"
 
    if [ -n "$var_os_is_debian" ]; then
