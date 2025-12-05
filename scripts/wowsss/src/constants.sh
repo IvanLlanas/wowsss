@@ -11,7 +11,7 @@ function define_constants_1 ()
    cons_lit_product_name_short="WoWSSS"
    cons_lit_product_name_long="World of Warcraft Server Script System"
    cons_lit_product_version="1.5"
-   cons_lit_product_date="2025-08-31"
+   cons_lit_product_date="2025-12-05"
 
    # ANSI codes - Uncomment those being used.
    # ----------
@@ -312,7 +312,7 @@ function define_constants_1 ()
    cons_url_mop_sources_project="https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8"
 
    # Original data files can be found at https://github.com/wowgaming/client-data/releases/
-   cons_url_wotlk_data="https://github.com/IvanLlanas/wotlk-server-data-files/releases/download/v18/data.7z"
+   cons_url_wotlk_data="https://github.com/IvanLlanas/wotlk-server-data-files/releases/download/v19/data.7z"
    cons_url_cataclysm_data="https://github.com/IvanLlanas/cataclysm-server-data-files/releases/download/v2312/data.7z"
    # cons_url_cataclysm_sql="https://github.com/IvanLlanas/cataclysm-server-sql-files/releases/download/v2201/sql-files.7z"
    cons_url_cataclysm_sql="https://github.com/The-Cataclysm-Preservation-Project/TrinityCore/releases/download/TDB434.22011/TDB_full_434.22011_2022_01_09.7z"
