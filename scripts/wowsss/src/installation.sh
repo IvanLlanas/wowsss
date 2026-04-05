@@ -248,7 +248,11 @@ function _check_packages ()
       installed=$(is_package_installed "$package")
       if [ $installed = 0 ]; then
          echo ""
-         sudo apt-get --yes install $package | sed 's/^/      /'
+         if [ $WOWSSS_CONTAINED -gt 0 ]; then
+            apt-get --yes install $package | sed 's/^/      /'
+         else
+            sudo apt-get --yes install $package | sed 's/^/      /'
+         fi
          # if [[ $? > 0 ]]
          if [[ ${PIPESTATUS[0]} -gt 0 ]]; then
             show_fatal_error "$cons_msg_installation_failed"
@@ -272,11 +276,11 @@ function initial_check_required_packages ()
 
    if [ -n "$var_os_is_debian" ]; then
 
-      if [ $var_os_version == 13 ]; then
-         _check_packages "$cons_packages_wowsss_deb13" "$cons_msg_checking_wowsss_req_packages"
-      else
-         _check_packages "$cons_packages_wowsss_deb12" "$cons_msg_checking_wowsss_req_packages"
-      fi
+      #if [ $var_os_version == 13 ]; then
+      #   _check_packages "$cons_packages_wowsss_deb13" "$cons_msg_checking_wowsss_req_packages"
+      #else
+      #   _check_packages "$cons_packages_wowsss_deb12" "$cons_msg_checking_wowsss_req_packages"
+      #fi
 
       # Debian (12) does not include mysql-server in its repositories and it must be installed
       # manually.

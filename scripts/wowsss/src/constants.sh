@@ -10,8 +10,8 @@ function define_constants_1 ()
 {
    cons_lit_product_name_short="WoWSSS"
    cons_lit_product_name_long="World of Warcraft Server Script System"
-   cons_lit_product_version="1.5"
-   cons_lit_product_date="2025-12-05"
+   cons_lit_product_version="1.6"
+   cons_lit_product_date="2026-04-05"
 
    # ANSI codes - Uncomment those being used.
    # ----------
@@ -21,7 +21,7 @@ function define_constants_1 ()
    _ansi_red="\e[31m"
 #  _ansi_green="\e[32m"
 #  _ansi_yellow="\e[33m"
-  _ansi_blue="\e[34m"
+   _ansi_blue="\e[34m"
 #  _ansi_magenta="\e[35m"
 #  _ansi_teal="\e[36m"
 #  _ansi_gray="\e[37m"
@@ -260,6 +260,7 @@ function define_constants_1 ()
    cons_option_server_information="Show servers information"
    cons_lit_server_information="Servers information"
    cons_option_configure_realm_ips="Configure realm IPs"
+   cons_option_change_realm_name="Change realm name"
    cons_option_back="Back"
    cons_option_start_server="Start the servers"
    cons_option_stop_server="Stop the servers"
@@ -300,6 +301,13 @@ function define_constants_1 ()
    cons_lit_public_server_remark="(Accept connections from the Internet)"
    cons_lit_private_server="Private server"
    cons_lit_private_server_remark="(Accept only connections from the local network)"
+   cons_lit_manual_ips="Manual"
+   cons_lit_manual_ips_remark="(Enter manually the server IPs)"
+   cons_lit_enter_address="Enter address"
+   cons_lit_enter_local_address="Enter localAddress"
+   cons_lit_enter_new_name="Enter new realm name"
+   cons_msg_error_multiple_realms="No/multiple realm records. Cannot continue."
+   
    cons_msg_select_ip_mode_for_="Select IP mode for "
    cons_error_applying_changes="Error applying changes."
 
@@ -321,10 +329,9 @@ function define_constants_1 ()
    cons_url_mop_sql="https://github.com/Legends-of-Azeroth/Legends-of-Azeroth-Pandaria-5.4.8/releases/download/WDB20231230/world_548_20240722.7z"
 
    # Linux packages
-   cons_packages_wowsss="git p7zip-full unzip gcp screen wget sox"
-      # dnsutils is only required in Debian 12 to get dig. Ubuntu adds it in another package.
-      cons_packages_wowsss_deb12="dnsutils"
-      cons_packages_wowsss_deb13="bind9-dnsutils"
+   cons_packages_wowsss="git p7zip-full unzip gcp screen wget rsync sox bind9-dnsutils"
+      #cons_packages_wowsss_deb12="dnsutils"
+      #cons_packages_wowsss_deb13="bind9-dnsutils"
 
    cons_packages_wotlk="cmake make gcc g++ clang libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev"
    cons_packages_wotlk_mysql="mysql-server libmysqlclient-dev"
@@ -351,6 +358,12 @@ function define_constants_1 ()
    mn_c1_text=6
    mn_c2_letter=50
    mn_c2_text=53
+   
+   # Docker messages
+   cons_msg_docker_starting_mysqld="Starting <b>mysqld</b>..."   
+   cons_option_quit_docker="Quit (close container!)"
+   cons_option_shell_docker="Open shell"
+   cons_msg_open_shell_docker="Type \"exit\" to return to WoWSSS."
 }
 
 # ------------------------------------------------------------------------------

@@ -3,7 +3,7 @@
            \   \/\/  /  _ \  \/\/   /____  \_____  \_____  \
             \       (  (_) )       /        \       \       \
              \__/\  /\____/\__/\  /_______  /_____  /_____  /
-                  \/            \/        \/      \/      \/ 1.5
+                  \/            \/        \/      \/      \/ 1.6
 
 # _World of Warcraft_ Server Script System
 [Github repository](https://github.com/IvanLlanas/wowsss)

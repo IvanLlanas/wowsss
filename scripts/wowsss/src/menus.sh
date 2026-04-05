@@ -8,6 +8,7 @@
 # function main_menu_sources_update ()
 # function main_menu_sources_compile ()
 # function main_menu_configure_realms_ips ()
+# function main_menu_change_realm_name ()
 # ------------------------------------------------------------------------------
 function print_x ()
 {
@@ -19,7 +20,6 @@ function print_x ()
    echo -en "$msg"
 }
 
-
 # ------------------------------------------------------------------------------
 # function shutdown_host (reboot)
 # Shutdowns or reboots (reboot=1) the host if no server is running.
@@ -27,8 +27,15 @@ function print_x ()
 function shutdown_host ()
 {
    local reboot=$1
+   
+   if [ $WOWSSS_CONTAINED -gt 0 ]; then
+      # Just in case...
+      return
+   fi
+
    ensure_no_server_running
    if [ $var_no_server_running ]; then
+
       if [ $reboot -gt 0 ]; then
          print_info_message "$cons_msg_see_you";
          print_warning_message "$cons_msg_rebooting";
@@ -113,11 +120,18 @@ function wowsss_main_menu ()
       print_x $c4 $make_enabled"$cons_option_switch_server_mode"$x
       CR
       CR
-      print_x $c1 $d"Q$x)"
-      print_x $c2 $_c_menu_text"$cons_option_quit"$x
-      c3q=$(expr $c3 - 3)
-      print_x $c3q $d"X$x,$d Y$x)"
-      print_x $c4 $make_enabled"$cons_option_shutdown_options"$x
+      if [ $WOWSSS_CONTAINED -gt 0 ]; then
+         print_x $c1 $d"Q$x)"
+         print_x $c2 $_c_menu_text"$cons_option_quit_docker"$x
+         print_x $c3 $d"H$x)"
+         print_x $c4 $_c_menu_text"$cons_option_shell_docker"$x
+      else
+         print_x $c1 $d"Q$x)"
+         print_x $c2 $_c_menu_text"$cons_option_quit"$x
+         c3q=$(expr $c3 - 3)
+         print_x $c3q $d"X$x,$d Y$x)"
+         print_x $c4 $make_enabled"$cons_option_shutdown_options"$x
+      fi
       CR
       CR
       read_answer "$cons_msg_choose_an_option"
@@ -143,9 +157,24 @@ function wowsss_main_menu ()
        "Q")    print_info_message "$cons_msg_good_bye"
                return
                ;;
-       "X")    shutdown_host 0
+       "X")    if [ $WOWSSS_CONTAINED -gt 0 ]; then
+                  print_error_message "$cons_msg_error_invalid_option_\"<b>$var_answer</b>\"."
+               else
+                  shutdown_host 0
+               fi
                ;;
-       "Y")    shutdown_host 1
+       "Y")    if [ $WOWSSS_CONTAINED -gt 0 ]; then
+                  print_error_message "$cons_msg_error_invalid_option_\"<b>$var_answer</b>\"."
+               else
+                  shutdown_host 1
+               fi
+               ;;
+       "H")    if [ $WOWSSS_CONTAINED -gt 0 ]; then
+                  print_full_width "$cons_msg_open_shell_docker"
+                  $SHELL
+               else
+                  print_error_message "$cons_msg_error_invalid_option_\"<b>$var_answer</b>\"."
+               fi
                ;;
          *)    print_error_message "$cons_msg_error_invalid_option_\"<b>$var_answer</b>\".";;
       esac
@@ -220,6 +249,9 @@ function databases_menu ()
       print_x $c1 $d"I$x)"
       print_x $c2 $start_enabled"$cons_option_configure_realm_ips"$x
       CR
+      print_x $c1 $d"N$x)"
+      print_x $c2 $start_enabled"$cons_option_change_realm_name"$x
+      CR
       print_x $c1 $d"R$x)"
       print_x $c2 $make_enabled"$cons_option_restore_databases"$x
       CR
@@ -230,6 +262,7 @@ function databases_menu ()
       read_answer "$cons_msg_choose_an_option"
       case $var_answer in
          "I")  main_menu_configure_realms_ips;;
+         "N")  main_menu_change_realm_name;;
          "R")  main_menu_restore_databases;;
            *)  return;;
       esac
@@ -463,6 +496,53 @@ function main_menu_sources_compile ()
 }
 
 # ------------------------------------------------------------------------------
+# function main_menu_change_realm_name ()
+# Menu option: Compile servers and tools
+# ------------------------------------------------------------------------------
+function main_menu_change_realm_name ()
+{
+   ensure_no_server_running
+   if [ $var_no_server_running ]; then
+
+      if [ $var_realm_count -ne 1 ]; then
+         print_error_message "$cons_msg_error_multiple_realms"
+         wait
+         return
+      else
+         local i="   "
+         print_full_width "$cons_option_change_realm_name"
+         CR
+         database_get_realm_info
+         local x=$_ansi_off
+
+         print_x 4 "$cons_lit_realm_name: $_c_bold3$var_realm_name$x"
+         CR
+         CR
+         read_answer "${i}$cons_lit_enter_new_name: "
+         if [[ "$var_answer" = "" ]]; then
+            print_error_message "$cons_lit_cancelled"
+            wait
+            return
+         fi
+
+         local new_name=$var_answer
+         CR
+         read_confirmation "$x$cons_lit_apply name=$new_name$x"
+         if [ $var_confirmed ]; then
+            database_setup_realm_name "$new_name"
+            local result=$?
+            if [ $result -ne 0 ]; then
+               print_error_message "$cons_error_applqying_changes"
+            else
+               print_info_message "$cons_msg_done"
+               database_get_realm_info
+            fi
+         fi
+      fi
+   fi
+}
+
+# ------------------------------------------------------------------------------
 # function main_menu_configure_realms_ips ()
 # Menu option: Compile servers and tools
 # ------------------------------------------------------------------------------
@@ -498,15 +578,30 @@ function main_menu_configure_realms_ips ()
             print_text "${i}${i} ${i}[ address: $_c_bold2$var_internal_ip$x / localAddress: $_c_bold1$ip127$x ]"
             print_text "${i}${i} <b>2</b>) $_ansi_red""$cons_lit_public_server$x $cons_lit_public_server_remark"
             print_text "${i}${i} ${i}[ address: $_c_bold2$var_external_ip$x / localAddress: $_c_bold1$var_internal_ip$x]"
+            print_text "${i}${i} <b>3</b>) $_ansi_cyan""$cons_lit_manual_ips$x $cons_lit_manual_ips_remark"
+            print_text "${i}${i} ${i}[ address: $_c_bold2$var_internal_ip$x / localAddress: $_c_bold1$ip127$x ]"
             print_text "${i}<b>ENTER</b>) Cancel."
             CR
-            read_answer "${i}$cons_msg_select_ip_mode_for_$_c_bold2$var_realm_name$x (<b>$var_server_name</b>) ($_ansi_red"1"$x/$_ansi_lime"2"$x/<b>ENTER</b>): "
+            read_answer "${i}$cons_msg_select_ip_mode_for_$_c_bold2$var_realm_name$x (<b>$var_server_name</b>) ($_ansi_red"1"$x/$_ansi_lime"2"$x/$_ansi_cyan"3"$x/<b>ENTER</b>): "
             case $var_answer in
              "1") ext_ip=$var_internal_ip
                   int_ip=$ip127
                   ;;
              "2") ext_ip=$var_external_ip
                   int_ip=$var_internal_ip
+                  ;;
+             "3") read_answer "${i}$cons_lit_enter_address ($_c_bold2$var_internal_ip$x) "
+                  if [[ "$var_answer" = "" ]]; then
+                     ext_ip=$var_internal_ip
+                  else
+                     ext_ip=$var_answer
+                  fi
+                  read_answer "${i}$cons_lit_enter_local_address ($_c_bold1$ip127$x) "
+                  if [[ "$var_answer" = "" ]]; then
+                     int_ip=$ip127
+                  else
+                     int_ip=$var_answer
+                  fi                  
                   ;;
                *) print_error_message "$cons_lit_cancelled"
                   wait
@@ -515,7 +610,7 @@ function main_menu_configure_realms_ips ()
             CR
             read_confirmation "$x$cons_lit_apply address=$_c_bold2$ext_ip$x / localAddress=$_c_bold1$int_ip$x"
             if [ $var_confirmed ]; then
-               database_setup_realm "$ext_ip" "$int_ip"
+               database_setup_realm_ips "$ext_ip" "$int_ip"
                local result=$?
                if [ $result -ne 0 ]; then
                   print_error_message "$cons_error_applqying_changes"

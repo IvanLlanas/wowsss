@@ -5,9 +5,25 @@
 # function databases_check_create()
 # function initial_check_databases ()
 # function database_get_realm_info ()
-# function database_setup_realm ()
+# function database_setup_realm_ips ()
+# function database_setup_realm_name ()
 # function _database_check_table_exists (db, tablename)
 # ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# Starts the MySQL service if running in a container.
+# ------------------------------------------------------------------------------
+function _docker_start_mysqld ()
+{
+   if [ $WOWSSS_CONTAINED -gt 0 ]; then
+      local var_pidof_mysqld=$(pidof mysqld)
+      if [[ ! $var_pidof_mysqld ]]; then
+         print_info_message "$cons_msg_docker_starting_mysqld"
+         mysqld &
+         sleep 2
+      fi
+   fi
+}
 
 # ------------------------------------------------------------------------------
 # Creates a temporary MySQL configuration file to specify the login credentials
@@ -32,7 +48,11 @@ function _mysql_secure_installation ()
     $DBENGINE_MYSQL)
          print_info_message "$cons_lit_configuring <b>$name_mysql_full</b>..."
          print_warning_message "ALTER USER (<b>$var_db_user</b>@localhost)..."
-         sudo mysql -e "ALTER USER '$var_db_user'@'localhost' IDENTIFIED WITH caching_sha2_password BY '$var_db_pass'; FLUSH PRIVILEGES;"
+         if [ $WOWSSS_CONTAINED -gt 0 ]; then
+            mysql -e "ALTER USER '$var_db_user'@'localhost' IDENTIFIED WITH caching_sha2_password BY '$var_db_pass'; FLUSH PRIVILEGES;"
+         else
+            sudo mysql -e "ALTER USER '$var_db_user'@'localhost' IDENTIFIED WITH caching_sha2_password BY '$var_db_pass'; FLUSH PRIVILEGES;"
+         fi
          result=$?
          if [ $result -ne 0 ]; then
             print_fatal_error "Error @ ALTER-USER"
@@ -45,7 +65,7 @@ function _mysql_secure_installation ()
    esac
 
    # These commands are also performed by mysql_secure_installation but they're
-   # not required for WoWSSS to work so, let the user take care of it.
+   # not required for WoWSSS to work so, let the user take care of them.
    # Kill off the demo database
    # sudo mysql -e "DROP DATABASE IF EXISTS test"
    # Kill the anonymous users
@@ -198,6 +218,7 @@ function initial_check_databases ()
 {
    print_full_width "$cons_msg_checking_databases"
    _mysql_create_temp_file
+   _docker_start_mysqld
    database_check_enable_admin_access
    database_check_create_servers_access
    databases_check_create
@@ -249,16 +270,28 @@ function database_get_realm_info ()
 }
 
 # ------------------------------------------------------------------------------
-# function database_setup_realm ()
+# function database_setup_realm_ips ()
 # Changes de IPs of the realm in the current database.
 # ------------------------------------------------------------------------------
-function database_setup_realm ()
+function database_setup_realm_ips ()
 {
    local ext_ip=$1
    local int_ip=$2
    local uparams="--defaults-extra-file=$var_db_client_file"
    mysql $uparams -e \
    "USE $var_db_auth_name; UPDATE realmlist SET address='$ext_ip', localAddress='$int_ip'"
+}
+
+# ------------------------------------------------------------------------------
+# function database_setup_realm_name ()
+# Changes de IPs of the realm in the current database.
+# ------------------------------------------------------------------------------
+function database_setup_realm_name ()
+{
+   local realm_name="$1"
+   local uparams="--defaults-extra-file=$var_db_client_file"
+   mysql $uparams -e \
+   "USE $var_db_auth_name; UPDATE realmlist SET name='$realm_name'"
 }
 
 # ------------------------------------------------------------------------------

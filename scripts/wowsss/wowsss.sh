@@ -5,10 +5,10 @@
 #    \   \/\/  /  _ \  \/\/   /____  \_____  \_____  \ 
 #     \       (  (_) )       /        \       \       \
 #      \__/\  /\____/\__/\  /_______  /_____  /_____  /
-#           \/            \/        \/      \/      \/ 1.5
+#           \/            \/        \/      \/      \/ 1.6
 # ------------------------------------------------------------------------------
 # World of Warcraft Server Script System
-# (C) Copyright by Ivan Llanas, 2023-25
+# (C) Copyright by Ivan Llanas, 2023-26
 # ------------------------------------------------------------------------------
 # This script performs all the functions related to a "World of Warcraft"
 # private server installation and maintenance on an Ubuntu or Debian system.

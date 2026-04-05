@@ -14,12 +14,18 @@ function define_variables_1 ()
 
    # OS name and version -------------------------------------------------------
    var_os_hostname=$HOSTNAME
-   if type lsb_release >/dev/null 2>&1; then
+   if [ $WOWSSS_CONTAINED -gt 0 ]; then
+      var_os_is_ubuntu=1
+      # Assume OS info from current container used
+      var_os_name="Ubuntu*"
+      var_os_version="25.10*"
+      var_os_codename="docked*"
+      var_os_distribution="$var_os_name $var_os_version ($var_os_codename)"
+   elif type lsb_release >/dev/null 2>&1; then
       # Get OS info from lsb_release
       var_os_name=$(lsb_release -si)
       var_os_version=$(lsb_release -sr)
       var_os_codename=$(lsb_release -sc)
-      var_os_distribution="$var_os_name $var_os_version ($var_os_codename)"
       case $var_os_name in
         *"Ubuntu"*) var_os_is_ubuntu=1;;
         *"Debian"*) var_os_is_debian=1;;
@@ -29,6 +35,7 @@ function define_variables_1 ()
    else
       print_fatal_error "$cons_msg_unknown_linux_version"
    fi
+   var_os_distribution="$var_os_name $var_os_version ($var_os_codename)"
    print_literal_value "$var_os_hostname - $var_os_distribution" "$cons_lit_host_os"
 
    # Current user name and current user home directory -------------------------
