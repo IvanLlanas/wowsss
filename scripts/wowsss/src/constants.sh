@@ -307,7 +307,7 @@ function define_constants_1 ()
    cons_lit_enter_local_address="Enter localAddress"
    cons_lit_enter_new_name="Enter new realm name"
    cons_msg_error_multiple_realms="No/multiple realm records. Cannot continue."
-   
+
    cons_msg_select_ip_mode_for_="Select IP mode for "
    cons_error_applying_changes="Error applying changes."
 
@@ -358,9 +358,9 @@ function define_constants_1 ()
    mn_c1_text=6
    mn_c2_letter=50
    mn_c2_text=53
-   
+
    # Docker messages
-   cons_msg_docker_starting_mysqld="Starting <b>mysqld</b>..."   
+   cons_msg_docker_starting_mysqld="Starting <b>mysqld</b>..."
    cons_option_quit_docker="Quit (close container!)"
    cons_option_shell_docker="Open shell"
    cons_msg_open_shell_docker="Type \"exit\" to return to WoWSSS."

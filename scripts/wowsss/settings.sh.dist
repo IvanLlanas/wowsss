@@ -97,3 +97,6 @@ AUTOSTART_SERVERS_OUTDATED=0
 #    ubuntu will be assumed (src/variables.sh)
 #    ubuntu:XXXX container do not autostart services, so mysqld is manually laucnhed.
 WOWSSS_CONTAINED=0
+
+# Seconds to wait after mysqld starts (docker).
+WOWSSS_CONTAINED_MYSQLD_WAIT=2

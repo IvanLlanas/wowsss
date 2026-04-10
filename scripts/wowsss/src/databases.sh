@@ -20,7 +20,21 @@ function _docker_start_mysqld ()
       if [[ ! $var_pidof_mysqld ]]; then
          print_info_message "$cons_msg_docker_starting_mysqld"
          mysqld &
-         sleep 2
+         local n=$WOWSSS_CONTAINED_MYSQLD_WAIT
+         local i
+         echo -ne "  Waiting ($n""s): $_ansi_white"0
+         for (( i=1; i<n+1; i++ )) ;
+         {
+            sleep 0.25
+            echo -ne .
+            sleep 0.25
+            echo -ne .
+            sleep 0.25
+            echo -ne .
+            sleep 0.25
+            echo -ne $i
+         }
+         echo
       fi
    fi
 }

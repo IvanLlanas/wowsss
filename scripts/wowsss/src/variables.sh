@@ -14,32 +14,42 @@ function define_variables_1 ()
 
    # OS name and version -------------------------------------------------------
    var_os_hostname=$HOSTNAME
-   if [ $WOWSSS_CONTAINED -gt 0 ]; then
-      var_os_is_ubuntu=1
-      # Assume OS info from current container used
-      var_os_name="Ubuntu*"
-      var_os_version="25.10*"
-      var_os_codename="docked*"
-      var_os_distribution="$var_os_name $var_os_version ($var_os_codename)"
+
+   if [ -f /etc/os-release ]; then
+      # Extract info from /etc/os-release using sed. xargs removes trailing and leading quotes.
+      var_os_name=$(sed -n 's/^NAME=\(.*\)/\1/p' < /etc/os-release | xargs)
+      var_os_version=$(sed -n 's/^VERSION_ID=\(.*\)/\1/p' < /etc/os-release | xargs)
+      var_os_codename=$(sed -n 's/^VERSION_CODENAME=\(.*\)/\1/p' < /etc/os-release | xargs)
    elif type lsb_release >/dev/null 2>&1; then
       # Get OS info from lsb_release
       var_os_name=$(lsb_release -si)
       var_os_version=$(lsb_release -sr)
       var_os_codename=$(lsb_release -sc)
-      case $var_os_name in
-        *"Ubuntu"*) var_os_is_ubuntu=1;;
-        *"Debian"*) var_os_is_debian=1;;
-        *"mint"*)   var_os_is_ubuntu=1;;
-        *) print_fatal_error "$cons_msg_unknown_linux_version";;
-      esac
    else
       print_fatal_error "$cons_msg_unknown_linux_version"
    fi
+
+   case $var_os_name in
+     *"Ubuntu"*) var_os_is_ubuntu=1;;
+     *"Debian"*) var_os_is_debian=1;;
+     *"mint"*)   var_os_is_ubuntu=1;;
+     *) print_fatal_error "$cons_msg_unknown_linux_version";;
+   esac
+
+   if [ $WOWSSS_CONTAINED -gt 0 ]; then
+      var_os_name="$var_os_name*"
+      var_os_version="$var_os_version*"
+      var_os_codename="$var_os_codename*"
+   fi
+
    var_os_distribution="$var_os_name $var_os_version ($var_os_codename)"
    print_literal_value "$var_os_hostname - $var_os_distribution" "$cons_lit_host_os"
 
    # Current user name and current user home directory -------------------------
    var_os_username=$USER
+   if  [[ "$var_or_username" == "" ]]; then
+      var_os_username=$(whoami)
+   fi
    var_os_userid=$UID
    print_literal_value "$var_os_username$_ansi_off/$var_os_userid ($HOME)" "$cons_lit_user"
 
@@ -49,6 +59,8 @@ function define_variables_1 ()
    var_dir_base=${var_dir_wowsss_script%/*/*} # Remove the last 2 subdirs (wowsss and scripts) from the current script's path.
    # Scripts directory
    var_dir_scripts="$var_dir_base/scripts"
+   # rc file for screen
+   var_file_screenrc="$var_dir_scripts/screen/screenrc"
    var_dir_sql="$var_dir_scripts/sql"
    # Logs directory
    var_dir_logs="$var_dir_base/logs"
