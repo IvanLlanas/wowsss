@@ -407,6 +407,7 @@ function show_wowsss_info ()
 
    if [ $from_menu ]; then
       print_full_width "$cons_lit_server_information"
+      echo
    else
      if [[ $var_internal_ip == "" ]]; then
         get_ips
