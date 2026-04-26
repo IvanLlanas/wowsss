@@ -11,6 +11,35 @@
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
+# Starts the MySQL service if running in a container.
+# ------------------------------------------------------------------------------
+function _docker_start_mysqld ()
+{
+   if [ $WOWSSS_CONTAINED -gt 0 ]; then
+      local var_pidof_mysqld=$(pidof mysqld)
+      if [[ ! $var_pidof_mysqld ]]; then
+         print_info_message "$cons_msg_docker_starting_mysqld"
+         mysqld &
+         local n=$WOWSSS_CONTAINED_MYSQLD_WAIT
+         local i
+         echo -ne "  Waiting ($n""s): $_ansi_white"0
+         for (( i=1; i<n+1; i++ )) ;
+         {
+            sleep 0.25
+            echo -ne .
+            sleep 0.25
+            echo -ne .
+            sleep 0.25
+            echo -ne .
+            sleep 0.25
+            echo -ne $i
+         }
+         echo
+      fi
+   fi
+}
+
+# ------------------------------------------------------------------------------
 # Creates a temporary MySQL configuration file to specify the login credentials
 # and avoid using the unsafe (and its ugly warning message) --password parameter.
 # ------------------------------------------------------------------------------
@@ -203,6 +232,7 @@ function initial_check_databases ()
 {
    print_full_width "$cons_msg_checking_databases"
    _mysql_create_temp_file
+   _docker_start_mysqld
    database_check_enable_admin_access
    database_check_create_servers_access
    databases_check_create

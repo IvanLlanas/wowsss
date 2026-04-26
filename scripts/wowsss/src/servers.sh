@@ -184,7 +184,7 @@ function main_menu_servers_start ()
          # gnome-terminal --tab --title "AuthServer" -- bash -c "$server"
          # nohup "$server" > "$var_dir_logs/authserver.out" &
          # nohup "$server" > /dev/null &
-         screen -c "$var_file_screenrc" -AmdS  $var_session_auth  "$server"
+         screen -AmdS  $var_session_auth  "$server"
          auth_just_loaded=1
       else
          print_error_message "$cons_msg_error_authserver_not_found"
@@ -205,7 +205,7 @@ function main_menu_servers_start ()
       local server="$var_bin_worldserver"
       if test -x "$server"; then
          print_info_message "$cons_msg_starting_worldserver"
-         screen -c "$var_file_screenrc" -AmdS  $var_session_world  "$server"
+         screen -AmdS  $var_session_world  "$server"
       else
          print_error_message "$cons_msg_error_worldserver_not_found"
       fi
