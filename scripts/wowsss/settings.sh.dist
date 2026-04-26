@@ -92,10 +92,10 @@ AUTOSTART_SERVERS_OUTDATED=0
 #    lsb_release not available
 #    sudo not available
 #    mysql-server access will be roughly configured.
+#    WoWSSS makes sure mysqld is running.
 # Requirements:
 #    apt (ubuntu/debian)
 #    ubuntu will be assumed (src/variables.sh)
-#    ubuntu:XXXX container do not autostart services, so mysqld is manually laucnhed.
 WOWSSS_CONTAINED=0
 
 # Seconds to wait after mysqld starts (docker).

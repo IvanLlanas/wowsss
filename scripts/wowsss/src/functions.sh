@@ -413,7 +413,7 @@ function show_wowsss_info ()
         get_ips
      fi
    fi
-
+ 
    # Host OS
    print_literal_value "$var_os_hostname - $var_os_distribution" "$cons_lit_info_host_os"
    print_literal_value "$var_os_username$_ansi_off/$var_os_userid ($HOME)" "$cons_lit_info_user"

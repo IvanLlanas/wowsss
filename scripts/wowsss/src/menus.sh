@@ -27,7 +27,7 @@ function print_x ()
 function shutdown_host ()
 {
    local reboot=$1
-   
+
    if [ $WOWSSS_CONTAINED -gt 0 ]; then
       # Just in case...
       return
@@ -171,11 +171,17 @@ function wowsss_main_menu ()
                ;;
        "H")    if [ $WOWSSS_CONTAINED -gt 0 ]; then
                   print_full_width "$cons_msg_open_shell_docker"
-                  $SHELL
+                  cd $var_dir_base
+                  if [ -f ~/.bashrc ]; then
+                     $SHELL --rcfile <(cat ~/.bashrc ; echo 'PS1="\e[7m[ WoWSSS ]\e[0m $PS1"')
+                  else
+                     $SHELL
+                  fi
                else
                   print_error_message "$cons_msg_error_invalid_option_\"<b>$var_answer</b>\"."
                fi
                ;;
+         "?")  main_menu_about;;
          *)    print_error_message "$cons_msg_error_invalid_option_\"<b>$var_answer</b>\".";;
       esac
    done
@@ -686,4 +692,55 @@ function _autostart_servers ()
          main_menu_servers_start
       fi
    fi
+}
+
+# ------------------------------------------------------------------------------
+# function  main_menu_about
+# Displays WoWSSS version info.
+# ------------------------------------------------------------------------------
+function main_menu_about ()
+{
+   local x=3
+   local z=$_ansi_off
+
+   local cbg=
+   local cf1=
+   local cf2=
+   case $var_current_mode in
+        $MODE_WOTLK)
+            cbg="\e[48;5;18m"
+            cf1="\e[38;5;87m"
+            cf2=$_ansi_white
+            ;;
+    $MODE_CATACLYSM)
+            cbg="\e[48;5;52m"
+            cf1="\e[38;5;202m"
+            cf2="\e[38;5;222m"
+            ;;
+          $MODE_MOP)
+            cbg="\e[48;5;22m"
+            cf1="\e[38;5;231m"
+            cf2="\e[38;5;229m"
+            ;;
+   esac
+
+   local s=$cbg$cf1
+
+   print_full_width "About WoWSSS..."
+   CR
+   print_x $x $s"-----------------------------------------------------------$z\n"
+   print_x $x $s"·    __      __    __      __________________________     ·$z\n"
+   print_x $x $s"·   /  \    /  \__/  \    /  \ _____/  _____/  _____/     ·$z\n"
+   print_x $x $s"·   \   \/\/  /  _ \  \/\/   /____  \_____  \_____  \     ·$z\n"
+   print_x $x $s"·    \       (  (_) )       /        \       \       \    ·$z\n"
+   print_x $x $s"·     \__/\  /\____/\__/\  /_______  /_____  /_____  /    ·$z\n"
+   print_x $x $s"·          \/            \/        \/      \/      \/ 1.6 ·$z\n"
+   print_x $x $s"·----------------------------------------------------------$z\n"
+   print_x $x $s"· $cf2  World of Warcraft Server Script System $cf1               ·$z\n"
+   print_x $x $s"· $cf2  (C) Copyright by Ivan Llanas, 2023-26  $cf1               ·$z\n"
+   print_x $x $s"-----------------------------------------------------------$z\n"
+   CR
+   print_x 5 "Press [ENTER] to continue..."
+   read_answer
+   CR
 }
