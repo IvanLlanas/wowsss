@@ -360,7 +360,6 @@ function define_constants_1 ()
    mn_c2_text=53
 
    # Docker messages
-   cons_msg_docker_starting_mysqld="Starting <b>mysqld</b>..."
    cons_option_quit_docker="Quit (close container!)"
    cons_option_shell_docker="Open shell"
    cons_msg_open_shell_docker="Type \"exit\" to return to WoWSSS."
