@@ -66,42 +66,6 @@ function print_information ()
    echo -e $_ansi_white$_ansi_bg_blue"[ ${msg} ]"$_ansi_off
 }
 
-function first_time_setting_up ()
-{
-   if [ ! -f "$flag_file" ]; then
-
-      # ---------------------------------------
-      print_title "WoWSSS environment first time setup"
-
-      print_information "Updating system..."
-      apt update
-      apt upgrade -y
-
-      print_information "Installing tools..."
-      apt install -y git nano
-
-      print_information "Getting WoWSSS..."
-      git clone https://github.com/IvanLlanas/wowsss.git /root/wowsss
-
-      # ---------------------------------------
-      print_title "WoWSSS Docker configuring..."
-
-      mkdir /root/remote
-
-      # Copy default settings. For clean dockers it's ok.
-      print_information "Replicating settings.sh..."
-      cp /root/wowsss/scripts/wowsss/settings.sh.dist /root/wowsss/scripts/wowsss/settings.sh
-
-      # Add "is_docker" variable to settings.sh
-      print_information "Adding variable to settings.sh..."
-      echo "WOWSSS_CONTAINED=1" >> /root/wowsss/scripts/wowsss/settings.sh
-
-      # Done!
-      print_information "Closing first time setup..."
-      touch "$flag_file"
-   fi
-}
-
 function start_wowsss ()
 {
    if [ ! -f "$flag_file" ]; then # Let's only spam once.
@@ -111,18 +75,9 @@ function start_wowsss ()
    ./start.sh
 }
 
-function start_shell ()
-{
-   print_information "WoWSSS finished. Starting shell. \"exit\" to close container."
-   $SHELL
-}
-
 function main ()
 {
-   first_time_setting_up
    start_wowsss
-   # Should be commented on final release.
-   # start_shell
 }
 
 main
