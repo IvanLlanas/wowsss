@@ -1,6 +1,3 @@
-# Suggested run clause:
-# $ docker run -h $HOSTNAME-wowsss -it -p 3724:3724 -p 8085:8085 -p 3306:3306 --name wowsss wowsss
-
 FROM ubuntu:25.10
 
 # 3724 - authserver
